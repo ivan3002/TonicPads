@@ -1,0 +1,651 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		73C23AAB2CF8BC76001486CB /* TonicPadsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C23AAA2CF8BC76001486CB /* TonicPadsApp.swift */; };
+		73C23AAF2CF8BC77001486CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73C23AAE2CF8BC77001486CB /* Assets.xcassets */; };
+		73C23AB22CF8BC77001486CB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73C23AB12CF8BC77001486CB /* Preview Assets.xcassets */; };
+		73C23ABC2CF8BC77001486CB /* TonicPadsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C23ABB2CF8BC77001486CB /* TonicPadsTests.swift */; };
+		73C23AC62CF8BC77001486CB /* TonicPadsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C23AC52CF8BC77001486CB /* TonicPadsUITests.swift */; };
+		73C23AC82CF8BC77001486CB /* TonicPadsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C23AC72CF8BC77001486CB /* TonicPadsUITestsLaunchTests.swift */; };
+		73DBEA772D0C7A18004C0D23 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73DBEA762D0C7A18004C0D23 /* LaunchScreen.storyboard */; };
+		73DBEA792D0C7D5A004C0D23 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DBEA782D0C7D5A004C0D23 /* MainView.swift */; };
+		73DBEA7B2D0C7D82004C0D23 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DBEA7A2D0C7D82004C0D23 /* HomeView.swift */; };
+		73DBEA7D2D0C819C004C0D23 /* SoundEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DBEA7C2D0C819C004C0D23 /* SoundEngine.swift */; };
+		73DBEA7F2D0C83EB004C0D23 /* SpriteBackgroundScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DBEA7E2D0C83EB004C0D23 /* SpriteBackgroundScene.swift */; };
+		73DBEA862D0C95AA004C0D23 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 73DBEA852D0C95AA004C0D23 /* AudioKit */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		73C23AB82CF8BC77001486CB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73C23A9F2CF8BC75001486CB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 73C23AA62CF8BC76001486CB;
+			remoteInfo = TonicPads;
+		};
+		73C23AC22CF8BC77001486CB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 73C23A9F2CF8BC75001486CB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 73C23AA62CF8BC76001486CB;
+			remoteInfo = TonicPads;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		73C23AA72CF8BC76001486CB /* TonicPads.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TonicPads.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		73C23AAA2CF8BC76001486CB /* TonicPadsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonicPadsApp.swift; sourceTree = "<group>"; };
+		73C23AAE2CF8BC77001486CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		73C23AB12CF8BC77001486CB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		73C23AB72CF8BC77001486CB /* TonicPadsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TonicPadsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		73C23ABB2CF8BC77001486CB /* TonicPadsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonicPadsTests.swift; sourceTree = "<group>"; };
+		73C23AC12CF8BC77001486CB /* TonicPadsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TonicPadsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		73C23AC52CF8BC77001486CB /* TonicPadsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonicPadsUITests.swift; sourceTree = "<group>"; };
+		73C23AC72CF8BC77001486CB /* TonicPadsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonicPadsUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		73DBEA762D0C7A18004C0D23 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		73DBEA782D0C7D5A004C0D23 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		73DBEA7A2D0C7D82004C0D23 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		73DBEA7C2D0C819C004C0D23 /* SoundEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundEngine.swift; sourceTree = "<group>"; };
+		73DBEA7E2D0C83EB004C0D23 /* SpriteBackgroundScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteBackgroundScene.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		73C23AA42CF8BC76001486CB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73DBEA862D0C95AA004C0D23 /* AudioKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73C23AB42CF8BC77001486CB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73C23ABE2CF8BC77001486CB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		73C23A9E2CF8BC75001486CB = {
+			isa = PBXGroup;
+			children = (
+				73C23AA92CF8BC76001486CB /* TonicPads */,
+				73C23ABA2CF8BC77001486CB /* TonicPadsTests */,
+				73C23AC42CF8BC77001486CB /* TonicPadsUITests */,
+				73C23AA82CF8BC76001486CB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		73C23AA82CF8BC76001486CB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				73C23AA72CF8BC76001486CB /* TonicPads.app */,
+				73C23AB72CF8BC77001486CB /* TonicPadsTests.xctest */,
+				73C23AC12CF8BC77001486CB /* TonicPadsUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		73C23AA92CF8BC76001486CB /* TonicPads */ = {
+			isa = PBXGroup;
+			children = (
+				73DBEA802D0C850C004C0D23 /* Models */,
+				73DBEA822D0C8546004C0D23 /* Views */,
+				73DBEA832D0C8579004C0D23 /* Controllers */,
+				73C23AAA2CF8BC76001486CB /* TonicPadsApp.swift */,
+				73C23AAE2CF8BC77001486CB /* Assets.xcassets */,
+				73C23AB02CF8BC77001486CB /* Preview Content */,
+			);
+			path = TonicPads;
+			sourceTree = "<group>";
+		};
+		73C23AB02CF8BC77001486CB /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				73C23AB12CF8BC77001486CB /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		73C23ABA2CF8BC77001486CB /* TonicPadsTests */ = {
+			isa = PBXGroup;
+			children = (
+				73C23ABB2CF8BC77001486CB /* TonicPadsTests.swift */,
+			);
+			path = TonicPadsTests;
+			sourceTree = "<group>";
+		};
+		73C23AC42CF8BC77001486CB /* TonicPadsUITests */ = {
+			isa = PBXGroup;
+			children = (
+				73C23AC52CF8BC77001486CB /* TonicPadsUITests.swift */,
+				73C23AC72CF8BC77001486CB /* TonicPadsUITestsLaunchTests.swift */,
+			);
+			path = TonicPadsUITests;
+			sourceTree = "<group>";
+		};
+		73DBEA802D0C850C004C0D23 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				73DBEA7E2D0C83EB004C0D23 /* SpriteBackgroundScene.swift */,
+				73DBEA7C2D0C819C004C0D23 /* SoundEngine.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		73DBEA822D0C8546004C0D23 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				73DBEA762D0C7A18004C0D23 /* LaunchScreen.storyboard */,
+				73DBEA7A2D0C7D82004C0D23 /* HomeView.swift */,
+				73DBEA782D0C7D5A004C0D23 /* MainView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		73DBEA832D0C8579004C0D23 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		73C23AA62CF8BC76001486CB /* TonicPads */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 73C23ACB2CF8BC77001486CB /* Build configuration list for PBXNativeTarget "TonicPads" */;
+			buildPhases = (
+				73C23AA32CF8BC76001486CB /* Sources */,
+				73C23AA42CF8BC76001486CB /* Frameworks */,
+				73C23AA52CF8BC76001486CB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TonicPads;
+			packageProductDependencies = (
+				73DBEA852D0C95AA004C0D23 /* AudioKit */,
+			);
+			productName = TonicPads;
+			productReference = 73C23AA72CF8BC76001486CB /* TonicPads.app */;
+			productType = "com.apple.product-type.application";
+		};
+		73C23AB62CF8BC77001486CB /* TonicPadsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 73C23ACE2CF8BC77001486CB /* Build configuration list for PBXNativeTarget "TonicPadsTests" */;
+			buildPhases = (
+				73C23AB32CF8BC77001486CB /* Sources */,
+				73C23AB42CF8BC77001486CB /* Frameworks */,
+				73C23AB52CF8BC77001486CB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				73C23AB92CF8BC77001486CB /* PBXTargetDependency */,
+			);
+			name = TonicPadsTests;
+			productName = TonicPadsTests;
+			productReference = 73C23AB72CF8BC77001486CB /* TonicPadsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		73C23AC02CF8BC77001486CB /* TonicPadsUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 73C23AD12CF8BC77001486CB /* Build configuration list for PBXNativeTarget "TonicPadsUITests" */;
+			buildPhases = (
+				73C23ABD2CF8BC77001486CB /* Sources */,
+				73C23ABE2CF8BC77001486CB /* Frameworks */,
+				73C23ABF2CF8BC77001486CB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				73C23AC32CF8BC77001486CB /* PBXTargetDependency */,
+			);
+			name = TonicPadsUITests;
+			productName = TonicPadsUITests;
+			productReference = 73C23AC12CF8BC77001486CB /* TonicPadsUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		73C23A9F2CF8BC75001486CB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					73C23AA62CF8BC76001486CB = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+					73C23AB62CF8BC77001486CB = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = 73C23AA62CF8BC76001486CB;
+					};
+					73C23AC02CF8BC77001486CB = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = 73C23AA62CF8BC76001486CB;
+					};
+				};
+			};
+			buildConfigurationList = 73C23AA22CF8BC75001486CB /* Build configuration list for PBXProject "TonicPads" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 73C23A9E2CF8BC75001486CB;
+			packageReferences = (
+				73DBEA842D0C95AA004C0D23 /* XCRemoteSwiftPackageReference "AudioKit" */,
+			);
+			productRefGroup = 73C23AA82CF8BC76001486CB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				73C23AA62CF8BC76001486CB /* TonicPads */,
+				73C23AB62CF8BC77001486CB /* TonicPadsTests */,
+				73C23AC02CF8BC77001486CB /* TonicPadsUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		73C23AA52CF8BC76001486CB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73DBEA772D0C7A18004C0D23 /* LaunchScreen.storyboard in Resources */,
+				73C23AB22CF8BC77001486CB /* Preview Assets.xcassets in Resources */,
+				73C23AAF2CF8BC77001486CB /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73C23AB52CF8BC77001486CB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73C23ABF2CF8BC77001486CB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		73C23AA32CF8BC76001486CB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73DBEA7B2D0C7D82004C0D23 /* HomeView.swift in Sources */,
+				73DBEA7F2D0C83EB004C0D23 /* SpriteBackgroundScene.swift in Sources */,
+				73DBEA792D0C7D5A004C0D23 /* MainView.swift in Sources */,
+				73C23AAB2CF8BC76001486CB /* TonicPadsApp.swift in Sources */,
+				73DBEA7D2D0C819C004C0D23 /* SoundEngine.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73C23AB32CF8BC77001486CB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73C23ABC2CF8BC77001486CB /* TonicPadsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73C23ABD2CF8BC77001486CB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73C23AC82CF8BC77001486CB /* TonicPadsUITestsLaunchTests.swift in Sources */,
+				73C23AC62CF8BC77001486CB /* TonicPadsUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		73C23AB92CF8BC77001486CB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 73C23AA62CF8BC76001486CB /* TonicPads */;
+			targetProxy = 73C23AB82CF8BC77001486CB /* PBXContainerItemProxy */;
+		};
+		73C23AC32CF8BC77001486CB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 73C23AA62CF8BC76001486CB /* TonicPads */;
+			targetProxy = 73C23AC22CF8BC77001486CB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		73C23AC92CF8BC77001486CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		73C23ACA2CF8BC77001486CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		73C23ACC2CF8BC77001486CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"TonicPads/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = UOY.TonicPads;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		73C23ACD2CF8BC77001486CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"TonicPads/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = UOY.TonicPads;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		73C23ACF2CF8BC77001486CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = UOY.TonicPadsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TonicPads.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TonicPads";
+			};
+			name = Debug;
+		};
+		73C23AD02CF8BC77001486CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = UOY.TonicPadsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TonicPads.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TonicPads";
+			};
+			name = Release;
+		};
+		73C23AD22CF8BC77001486CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = UOY.TonicPadsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TonicPads;
+			};
+			name = Debug;
+		};
+		73C23AD32CF8BC77001486CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = UOY.TonicPadsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TonicPads;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		73C23AA22CF8BC75001486CB /* Build configuration list for PBXProject "TonicPads" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73C23AC92CF8BC77001486CB /* Debug */,
+				73C23ACA2CF8BC77001486CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		73C23ACB2CF8BC77001486CB /* Build configuration list for PBXNativeTarget "TonicPads" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73C23ACC2CF8BC77001486CB /* Debug */,
+				73C23ACD2CF8BC77001486CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		73C23ACE2CF8BC77001486CB /* Build configuration list for PBXNativeTarget "TonicPadsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73C23ACF2CF8BC77001486CB /* Debug */,
+				73C23AD02CF8BC77001486CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		73C23AD12CF8BC77001486CB /* Build configuration list for PBXNativeTarget "TonicPadsUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73C23AD22CF8BC77001486CB /* Debug */,
+				73C23AD32CF8BC77001486CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		73DBEA842D0C95AA004C0D23 /* XCRemoteSwiftPackageReference "AudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/AudioKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		73DBEA852D0C95AA004C0D23 /* AudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 73DBEA842D0C95AA004C0D23 /* XCRemoteSwiftPackageReference "AudioKit" */;
+			productName = AudioKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 73C23A9F2CF8BC75001486CB /* Project object */;
+}

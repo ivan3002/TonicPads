@@ -10,6 +10,7 @@ import SwiftUI
 
 @main
 struct TonicPadsApp: App {
+    
     var body: some Scene {
         WindowGroup {
             

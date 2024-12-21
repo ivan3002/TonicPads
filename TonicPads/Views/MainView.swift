@@ -10,6 +10,7 @@ import SpriteKit
 
 
 struct SpriteKitBackgroundView: UIViewRepresentable {
+   
     func makeUIView(context: Context) -> SKView {
         let skView = SKView() // Create an SKView instance
         let scene = GlowingBackgroundScene(size: UIScreen.main.bounds.size) // Create the SpriteKit scene
@@ -26,11 +27,21 @@ struct SpriteKitBackgroundView: UIViewRepresentable {
 
 
 struct MainView: View {
+    let engineTest = SoundEngine()
     var body: some View {
         ZStack {
             SpriteKitBackgroundView() // The glowing SpriteKit background
                 .edgesIgnoringSafeArea(.all) // Ensure it fills the entire screen
                 .navigationBarBackButtonHidden(true)
+            Button(action: {
+                engineTest.startSound()
+                sleep(1)
+                engineTest.stopSound()
+                
+            }) {
+                Text("Sound Test")
+                
+            }
         }
     }
 }

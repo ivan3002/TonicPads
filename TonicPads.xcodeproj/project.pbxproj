@@ -19,6 +19,7 @@
 		73DBEA7D2D0C819C004C0D23 /* SoundEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DBEA7C2D0C819C004C0D23 /* SoundEngine.swift */; };
 		73DBEA7F2D0C83EB004C0D23 /* SpriteBackgroundScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DBEA7E2D0C83EB004C0D23 /* SpriteBackgroundScene.swift */; };
 		73DBEA862D0C95AA004C0D23 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 73DBEA852D0C95AA004C0D23 /* AudioKit */; };
+		73DF45AC2D1637F600D5CA8A /* SoundpipeAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 73DF45AB2D1637F600D5CA8A /* SoundpipeAudioKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73DF45AC2D1637F600D5CA8A /* SoundpipeAudioKit in Frameworks */,
 				73DBEA862D0C95AA004C0D23 /* AudioKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -183,6 +185,7 @@
 			name = TonicPads;
 			packageProductDependencies = (
 				73DBEA852D0C95AA004C0D23 /* AudioKit */,
+				73DF45AB2D1637F600D5CA8A /* SoundpipeAudioKit */,
 			);
 			productName = TonicPads;
 			productReference = 73C23AA72CF8BC76001486CB /* TonicPads.app */;
@@ -258,6 +261,7 @@
 			mainGroup = 73C23A9E2CF8BC75001486CB;
 			packageReferences = (
 				73DBEA842D0C95AA004C0D23 /* XCRemoteSwiftPackageReference "AudioKit" */,
+				73DF45AA2D1637F600D5CA8A /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */,
 			);
 			productRefGroup = 73C23AA82CF8BC76001486CB /* Products */;
 			projectDirPath = "";
@@ -637,6 +641,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		73DF45AA2D1637F600D5CA8A /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/SoundpipeAudioKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -644,6 +656,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 73DBEA842D0C95AA004C0D23 /* XCRemoteSwiftPackageReference "AudioKit" */;
 			productName = AudioKit;
+		};
+		73DF45AB2D1637F600D5CA8A /* SoundpipeAudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 73DF45AA2D1637F600D5CA8A /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */;
+			productName = SoundpipeAudioKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

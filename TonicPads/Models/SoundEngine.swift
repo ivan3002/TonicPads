@@ -51,8 +51,7 @@ class SoundEngine{
             print("Audio engine stopped.")
         }
     
-    func setAttack(){}
-    func setDecay(){}
+    
     func setVolume(){}
     func setComplexity(){}
     func setLowpassCutoff(){}

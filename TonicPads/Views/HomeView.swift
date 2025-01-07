@@ -8,32 +8,41 @@
 import SwiftUI
 
 struct HomeView: View {
-    
     @State private var hueRotationAngle: Double = 0
+    @State private var showMainView: Bool = false
+
     var body: some View {
-        NavigationView{
-            ZStack {
+        ZStack {
+            if showMainView {
+                MainView()
+            } else {
                 Color(red: 0.2, green: 0.4, blue: 0.5)
                     .edgesIgnoringSafeArea(.all)
                     .hueRotation(.degrees(hueRotationAngle))
-                    .onAppear{
+                    .onAppear {
                         withAnimation(Animation.linear(duration: 5).repeatForever(autoreverses: true).speed(1)) {
                             hueRotationAngle = 100
                         }
                     }
-                NavigationLink(destination: MainView()) {
-                    Text("Start!")
-                        .font(.title)
+                VStack {
+                    Text("Welcome!")
+                        .font(.largeTitle)
                         .foregroundColor(.white)
-                        .padding()
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                        //.transition(t)
+                        .padding(.bottom, 20)
+                    
+                    Button(action: {
+                        showMainView = true
+                    }) {
+                        Text("Start!")
+                            .font(.title)
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                    }
                 }
             }
-    
         }
-        
     }
 }
 

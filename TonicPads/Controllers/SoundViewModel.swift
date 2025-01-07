@@ -1,3 +1,11 @@
+//
+//  SoundViewModel.swift
+//  TonicPads
+//
+//  Created by Ivan Agyapong on 07/01/2025.
+//
+
+
 import Foundation
 
 class SoundViewModel: ObservableObject {
@@ -11,11 +19,11 @@ class SoundViewModel: ObservableObject {
         soundEngine.stopSound()
     }
 
-    func updateVolume(_ value: AUValue) {
+   /* func updateVolume(_ value: AUValue) {
         soundEngine.setVolume(value)
     }
 
     func updateFrequency(_ value: AUValue) {
         soundEngine.setFrequency(value)
-    }
+    }*/
 }

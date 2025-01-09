@@ -9,8 +9,16 @@ import Foundation
 import SpriteKit
 import SwiftUI
 
+
 class GlowingBackgroundScene: SKScene {
+    var viewModel: SoundViewModel!
     private var activeTouches: [UITouch: CGPoint] = [:] // Dictionary to track active touches and their locations
+    
+    private var dx: CGFloat = 0
+    private var dy:CGFloat = 0
+    private var startingX:CGFloat = 0
+    
+
 
     override func didMove(to view: SKView) {
         // Set the background color to a soft gradient color
@@ -30,7 +38,11 @@ class GlowingBackgroundScene: SKScene {
           for touch in touches {
               activeTouches[touch] = touch.location(in: self)
           }
-          printActiveFingers()
+          if let touch = touches.first, let startingPoint = activeTouches[touch] {
+              let startingX = startingPoint.x
+              print("Starting X: \(startingX)")
+          }
+          
       }
 
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -40,19 +52,24 @@ class GlowingBackgroundScene: SKScene {
                 
                 let deltaX = location.x - previousLocation.x
                 let deltaY = location.y - previousLocation.y
+                print("x: " ,deltaX)
+                
+                if activeTouches.count == 1 {
+                    viewModel.updateVolume(value: deltaY/460)
+                }
                 
                 // Determine touch direction
                 if abs(deltaX) > abs(deltaY) {
                     if deltaX > 0 {
-                        print("Moving right")
+                        //print("Moving right")
                     } else {
-                        print("Moving left")
+                        //print("Moving left")
                     }
                 } else {
                     if deltaY > 0 {
-                        print("Moving up")
+                        //print("Moving up")
                     } else {
-                        print("Moving down")
+                        //print("Moving down")
                     }
                 }
                 
@@ -63,10 +80,19 @@ class GlowingBackgroundScene: SKScene {
 
       override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
           // Remove ended touches from the dictionary
-          for touch in touches {
-              activeTouches.removeValue(forKey: touch)
+          if let touch = touches.first, let startingPoint = activeTouches[touch] {
+              let endingPoint = touch.location(in: self)
+              let dx = endingPoint.x - startingPoint.x // Calculate horizontal distance
+              print("Starting X: \(startingPoint.x), Ending X: \(endingPoint.x), dx: \(dx)")
+              
+              if activeTouches.count == 1{
+                  viewModel.updateFrequency(swipeDistance: dx)
+              }
           }
-          printActiveFingers()
+              for touch in touches {
+                  activeTouches.removeValue(forKey: touch)
+              }
+              printActiveFingers()
       }
 
       override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -77,7 +103,8 @@ class GlowingBackgroundScene: SKScene {
           printActiveFingers()
       }
 
-      private func printActiveFingers() {
+      
+    private func printActiveFingers() {
           print("Active fingers: \(activeTouches.count)")
       }
 
@@ -111,20 +138,18 @@ class GlowingBackgroundScene: SKScene {
     }
     
     func animateBackgroundGlow() {
-        // Create a subtle scaling animation to give life to the background
-        //let scaleUp = SKAction.scale(to: 1.02, duration: 4)
-        //let scaleDown = SKAction.scale(to: 1.0, duration: 4)
-        //let pulse = SKAction.sequence([scaleUp, scaleDown])
-        //self.run(SKAction.repeatForever(pulse))
+        
     }
 }
 
 
+
 struct SpriteKitBackgroundView: UIViewRepresentable {
-   
+    @EnvironmentObject var viewModel: SoundViewModel
     func makeUIView(context: Context) -> SKView {
         let skView = SKView() // Create an SKView instance
         let scene = GlowingBackgroundScene(size: UIScreen.main.bounds.size) // Create the SpriteKit scene
+        scene.viewModel = viewModel
         scene.scaleMode = .resizeFill // Scale the scene to fill the SKView
         skView.presentScene(scene) // Attach the scene to the SKView
         skView.allowsTransparency = true // Optional: Allows transparent backgrounds

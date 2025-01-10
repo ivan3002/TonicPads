@@ -85,12 +85,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7374AB0F2D2D805A00C179F5 /* Scenes */ = {
+		737550492D30ADF9004596B8 /* SpriteKitScene */ = {
 			isa = PBXGroup;
 			children = (
 				7374AB0E2D2D805A00C179F5 /* SpriteBackgroundScene.swift */,
 			);
-			path = Scenes;
+			path = SpriteKitScene;
 			sourceTree = "<group>";
 		};
 		73C23A9E2CF8BC75001486CB = {
@@ -116,10 +116,10 @@
 		73C23AA92CF8BC76001486CB /* TonicPads */ = {
 			isa = PBXGroup;
 			children = (
+				737550492D30ADF9004596B8 /* SpriteKitScene */,
 				73DBEA802D0C850C004C0D23 /* Models */,
 				73DBEA822D0C8546004C0D23 /* Views */,
 				73DBEA832D0C8579004C0D23 /* Controllers */,
-				7374AB0F2D2D805A00C179F5 /* Scenes */,
 				73C23AAE2CF8BC77001486CB /* Assets.xcassets */,
 				73C23AAA2CF8BC76001486CB /* TonicPadsApp.swift */,
 				73C23AB02CF8BC77001486CB /* Preview Content */,

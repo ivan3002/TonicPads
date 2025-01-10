@@ -10,7 +10,9 @@ import SpriteKit
 import SwiftUI
 
 
-class GlowingBackgroundScene: SKScene {
+class MainPadsScene: SKScene {
+    
+//--------------------------------**INIT**------------------------------------------------------------------------------
     var viewModel: SoundViewModel!
     private var activeTouches: [UITouch: CGPoint] = [:] // Dictionary to track active touches and their locations
     
@@ -27,10 +29,11 @@ class GlowingBackgroundScene: SKScene {
         // Add glowing light nodes
         addGlowingLight(at: CGPoint(x: size.width * 0.3, y: size.height * 0.6), glowRadius: 100)
         addGlowingLight(at: CGPoint(x: size.width * 0.7, y: size.height * 0.4), glowRadius: 150)
-        
-        // Add subtle animations
-        animateBackgroundGlow()
+    
     }
+    
+    
+//---------------------***TouchFunctionality**-----------------------------------------------------------------------
     
 
       override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -55,7 +58,7 @@ class GlowingBackgroundScene: SKScene {
                 print("x: " ,deltaX)
                 
                 if activeTouches.count == 1 {
-                    viewModel.updateVolume(value: deltaY/460)
+                    viewModel.updateVolume(volumeDistance: deltaY)
                 }
                 
                 // Determine touch direction
@@ -74,7 +77,7 @@ class GlowingBackgroundScene: SKScene {
                 }
                 
                 // Optional: Visualize or act on touch
-                visualizeTouch(at: location)
+                visualiseTouch(at: location)
             }
         }
 
@@ -108,8 +111,11 @@ class GlowingBackgroundScene: SKScene {
           print("Active fingers: \(activeTouches.count)")
       }
 
-      func visualizeTouch(at location: CGPoint) {
-          let circle = SKShapeNode(circleOfRadius: 10)
+    
+//-----------------------------------------**Animations**-----------------------------------------------
+    
+      func visualiseTouch(at location: CGPoint) {
+          let circle = SKShapeNode(circleOfRadius: 2)
           circle.position = location
           circle.fillColor = .cyan
           circle.alpha = 0.7
@@ -119,6 +125,8 @@ class GlowingBackgroundScene: SKScene {
           let remove = SKAction.removeFromParent()
           circle.run(SKAction.sequence([fadeOut, remove]))
       }
+    
+
     
     func addGlowingLight(at position: CGPoint, glowRadius: CGFloat) {
         // Create a circular glow
@@ -137,27 +145,9 @@ class GlowingBackgroundScene: SKScene {
         glow.run(SKAction.repeatForever(fadeInOut))
     }
     
-    func animateBackgroundGlow() {
-        
-    }
 }
 
+//---------------------------***Labels and Text***-----------------------------------------------------------
 
 
-struct SpriteKitBackgroundView: UIViewRepresentable {
-    @EnvironmentObject var viewModel: SoundViewModel
-    func makeUIView(context: Context) -> SKView {
-        let skView = SKView() // Create an SKView instance
-        let scene = GlowingBackgroundScene(size: UIScreen.main.bounds.size) // Create the SpriteKit scene
-        scene.viewModel = viewModel
-        scene.scaleMode = .resizeFill // Scale the scene to fill the SKView
-        skView.presentScene(scene) // Attach the scene to the SKView
-        skView.allowsTransparency = true // Optional: Allows transparent backgrounds
-        skView.isMultipleTouchEnabled = true
-        return skView
-    }
-    
-    func updateUIView(_ uiView: SKView, context: Context) {
-        // Updates the view if SwiftUI triggers a state change (not needed here)
-    }
-}
+

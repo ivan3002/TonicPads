@@ -25,21 +25,20 @@ struct HomeView: View {
                         }
                     }
                 VStack {
-                    Text("Welcome!")
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
-                        .padding(.bottom, 20)
-                    
                     Button(action: {
                         showMainView = true
                     }) {
-                        Text("Start!")
+                        Text("Go Inside")
                             .font(.title)
                             .foregroundColor(.white)
                             .padding()
                             .background(Color.blue)
                             .cornerRadius(10)
                     }
+                    Text("Tutorial")
+                        .font(.largeTitle)
+                        .foregroundColor(.white)
+                        .padding(.bottom, 20)
                 }
             }
         }

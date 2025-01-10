@@ -9,6 +9,24 @@ import SwiftUI
 import SpriteKit
 
 
+struct SpriteKitBackgroundView: UIViewRepresentable {
+    @EnvironmentObject var viewModel: SoundViewModel
+    func makeUIView(context: Context) -> SKView {
+        let skView = SKView() // Create an SKView instance
+        let scene = MainPadsScene(size: UIScreen.main.bounds.size) // Create the SpriteKit scene
+        scene.viewModel = viewModel
+        scene.scaleMode = .resizeFill // Scale the scene to fill the SKView
+        skView.presentScene(scene) // Attach the scene to the SKView
+        skView.allowsTransparency = true // Optional: Allows transparent backgrounds
+        skView.isMultipleTouchEnabled = true
+        return skView
+    }
+    
+    func updateUIView(_ uiView: SKView, context: Context) {
+        // Updates the view if SwiftUI triggers a state change (not needed here)
+    }
+}
+
 
 
 struct MainView: View {

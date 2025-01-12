@@ -31,17 +31,22 @@ class SoundEngine {
     
     private var volume: AUValue = 0.1
     private var frequency: AUValue = 261.63
-    private var wetDry: AUValue = 1 // Default to a mix
     
     var oscillators: [Oscillator]
     var waveforms: Table
-    var reverb: Reverb
+    var reverb: CostelloReverb
+    var lowPass: LowPassButterworthFilter
+    var dryWetMix: AUValue = 0.5
+    
+    let drySignal: Mixer
+    let wetSignal: Mixer
+    let finalMix: Mixer
 
     init() {
         waveforms = Table()
-        waveforms.square(harmonicCount: 7, clear: true)
+        waveforms.square(harmonicCount: 10, clear: true)
         oscillators = []
-        
+    
         // Initialize 6 oscillators
         for _ in 0..<6 {
             let osc = Oscillator(waveform: waveforms)
@@ -51,9 +56,19 @@ class SoundEngine {
         }
         
         let mixer = Mixer(oscillators)
-        reverb = Reverb(mixer, dryWetMix: wetDry)
+        
+        lowPass = LowPassButterworthFilter(mixer, cutoffFrequency: 20000)
+        reverb = CostelloReverb(lowPass, feedback: 0.9, cutoffFrequency: 7000)
+        
+        drySignal = Mixer(lowPass) // Unprocessed signal
+        wetSignal = Mixer(reverb) // Processed signal
+        finalMix = Mixer(drySignal, wetSignal) // Combine both signals
 
-        engineInstance.output = reverb
+        engineInstance.output = finalMix
+        
+        
+
+        
         print("SoundEngine setup complete.")
     }
 
@@ -85,5 +100,23 @@ class SoundEngine {
     func setFrequency(f: AUValue){
         // Predefined frequencies for the 12 notes in the chromatic scale (starting from A4 = 440 Hz)
         oscillators.forEach{$0.frequency = f}
+    }
+    
+    func setCutoff(lopass: CGFloat){
+        lowPass.cutoffFrequency = AUValue(lopass)
+    }
+    
+    func setDryWetMix(dry: AUValue, wet: AUValue) {
+        drySignal.volume = dry
+        wetSignal.volume = wet
+        dryWetMix = wet // Keep track of wet level for debugging
+        print("Dry/Wet Mix - Dry: \(dry), Wet: \(wet)")
+    }
+    
+    func setReverb(dryWet:AUValue){
+        //reverb.feedback = reverbAmount
+        let dry = 1.0 - dryWet
+        let wet = dryWet
+        setDryWetMix(dry: dry, wet: wet)
     }
 }

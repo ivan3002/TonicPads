@@ -49,47 +49,64 @@ class MainPadsScene: SKScene {
       }
 
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-            for touch in touches {
-                let location = touch.location(in: self)
-                let previousLocation = touch.previousLocation(in: self)
-                
-                let deltaX = location.x - previousLocation.x
-                let deltaY = location.y - previousLocation.y
-                print("x: " ,deltaX)
-                
-                if activeTouches.count == 1 {
-                    viewModel.updateVolume(volumeDistance: deltaY)
-                }
-                
-                // Determine touch direction
-                if abs(deltaX) > abs(deltaY) {
-                    if deltaX > 0 {
-                        //print("Moving right")
-                    } else {
-                        //print("Moving left")
-                    }
+        for touch in touches {
+            let location = touch.location(in: self)
+            let previousLocation = touch.previousLocation(in: self)
+
+            // Calculate deltas
+            let deltaX = location.x - previousLocation.x
+            let deltaY = location.y - previousLocation.y
+
+            // Normalize deltaX and deltaY based on screen size
+            let maxWidth = self.size.width
+            let maxHeight = self.size.height
+            let normalizedDeltaX = deltaX / maxWidth
+            let normalizedDeltaY = deltaY / maxHeight
+
+            print("Normalized x: ", normalizedDeltaX, " y: ", normalizedDeltaY)
+
+            // Determine the dominant direction of movement
+            if abs(normalizedDeltaX) > abs(normalizedDeltaY) {
+                if normalizedDeltaX > 0 {
+                    //print("Moving right")
                 } else {
-                    if deltaY > 0 {
-                        //print("Moving up")
-                    } else {
-                        //print("Moving down")
-                    }
+                    //print("Moving left")
                 }
-                
-                // Optional: Visualize or act on touch
-                visualiseTouch(at: location)
+            } else {
+                if normalizedDeltaY > 0 {
+                    //print("Moving up")
+                } else {
+                    //print("Moving down")
+                }
             }
+
+            // Handle gestures based on the number of active touches
+            if activeTouches.count == 1 {
+                let volumeAdjustment = normalizedDeltaY
+                viewModel.updateVolume(volumeDistance: volumeAdjustment)
+            } else if activeTouches.count == 2 {
+                let cutoffAdjustment = normalizedDeltaY
+                viewModel.updateFilterCutoff(cutoffDistance: cutoffAdjustment)
+            } else if activeTouches.count == 3 {
+                let reverbAdjustment = normalizedDeltaY
+                viewModel.updateReverbAmount(revAmount: reverbAdjustment)
+            }
+
+            // Optional: Visualize or act on the touch
+            visualiseTouch(at: location)
         }
+    }
 
       override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
           // Remove ended touches from the dictionary
           if let touch = touches.first, let startingPoint = activeTouches[touch] {
               let endingPoint = touch.location(in: self)
               let dx = endingPoint.x - startingPoint.x // Calculate horizontal distance
-              print("Starting X: \(startingPoint.x), Ending X: \(endingPoint.x), dx: \(dx)")
+              let normalisedDX = dx / self.size.width
+              //print("Starting X: \(startingPoint.x), Ending X: \(endingPoint.x), dx: \(dx)")
               
               if activeTouches.count == 1{
-                  viewModel.updateFrequency(swipeDistance: dx)
+                  viewModel.updateFrequency(swipeDistance: normalisedDX)
               }
           }
               for touch in touches {

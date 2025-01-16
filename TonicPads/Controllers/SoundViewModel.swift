@@ -10,6 +10,7 @@ import Foundation
 import AudioKit
 
 class SoundViewModel: ObservableObject {
+    var mainPadsScene: MainPadsScene?
     var currentNoteIndex: Int = 0
     private var soundEngine = SoundEngine()
 
@@ -30,30 +31,32 @@ class SoundViewModel: ObservableObject {
         
         
         let dxRange: CGFloat = 0.1 // Define sensitivity for a full note step
-          let steps = Int(swipeDistance / dxRange) // Calculate steps from swipe distance
+        let steps = Int(swipeDistance / dxRange) // Calculate steps from swipe distance
+        
           
-          // Calculate the potential new index
-          var newNoteIndex = currentNoteIndex + steps
+          
+      // Calculate the potential new index
+      var newNoteIndex = currentNoteIndex + steps
 
-          // Clamp the index to stay within valid bounds
-          if newNoteIndex < 0 {
-              newNoteIndex = 0 // Stay at the lowest note (C4)
-          } else if newNoteIndex >= soundEngine.chromaticScale.count {
-              newNoteIndex = soundEngine.chromaticScale.count - 1 // Stay at the highest note (B4)
-          }
-
-          // Update only if the index actually changes
-          if newNoteIndex != currentNoteIndex {
-              currentNoteIndex = newNoteIndex
-              let frequency = soundEngine.chromaticScale[currentNoteIndex]
-
-              // Update the sound engine or oscillator with the new frequency
-              //print("Swipe distance: \(swipeDistance), New Frequency: \(frequency) Hz (Note index: \(currentNoteIndex))")
-              soundEngine.setFrequency(f: AUValue(frequency))
-          } else {
-              //print("Swipe distance: \(swipeDistance), Frequency unchanged (Note index: \(currentNoteIndex))")
-          }
+      // Clamp the index to stay within valid bounds
+      if newNoteIndex < 0 {
+          newNoteIndex = 0 // Stay at the lowest note (C4)
+      } else if newNoteIndex >= soundEngine.chromaticScale.count {
+          newNoteIndex = soundEngine.chromaticScale.count - 1 // Stay at the highest note (B4)
       }
+
+      // Update only if the index actually changes
+      if newNoteIndex != currentNoteIndex {
+          currentNoteIndex = newNoteIndex
+          let frequency = soundEngine.chromaticScale[currentNoteIndex]
+
+          // Update the sound engine or oscillator with the new frequency
+          //print("Swipe distance: \(swipeDistance), New Frequency: \(frequency) Hz (Note index: \(currentNoteIndex))")
+          soundEngine.setFrequency(f: AUValue(frequency))
+      } else {
+          //print("Swipe distance: \(swipeDistance), Frequency unchanged (Note index: \(currentNoteIndex))")
+      }
+  }
     
     func updateFilterCutoff(cutoffDistance: CGFloat) {
         //input cutoffDistance will be between -1 and 1
@@ -101,6 +104,26 @@ class SoundViewModel: ObservableObject {
         soundEngine.setReverb(dryWet: newDryWet )
         
         
+    }
+    
+    
+    
+    
+   //---------------------------------------**Getters**-----------------------------------------------------------------------------
+    func getCurrentNoteIndex() -> Int {
+        return currentNoteIndex
+    }
+    
+    func getCurrentVolume() -> AUValue {
+        return soundEngine.volume
+    }
+
+    func getCurrentReverbAmount() -> AUValue {
+        return soundEngine.dryWetMix
+    }
+
+    func getCurrentFilterCutoff() -> AUValue {
+        return soundEngine.lowPass.cutoffFrequency
     }
     
 }

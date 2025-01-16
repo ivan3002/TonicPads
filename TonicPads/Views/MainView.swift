@@ -10,15 +10,26 @@ import SpriteKit
 
 
 struct SpriteKitBackgroundView: UIViewRepresentable {
+    
     @EnvironmentObject var viewModel: SoundViewModel
+    var size: CGSize // Pass the size explicitly
+    
+    // Store the scene for external access
+    var scene = MainPadsScene(size: .zero)
+    
     func makeUIView(context: Context) -> SKView {
+        
         let skView = SKView() // Create an SKView instance
-        let scene = MainPadsScene(size: UIScreen.main.bounds.size) // Create the SpriteKit scene
+        skView.allowsTransparency = true // Optional: Allows transparent backgrounds
+        skView.isMultipleTouchEnabled = true
+        //print("makeUIView: SKView bounds at creation: \(skView.bounds.size)")
+       
+        print("makeUIView: Passing size to scene: \(size)")
+        let scene = MainPadsScene(size: size) // Create the SpriteKit scene
         scene.viewModel = viewModel
         scene.scaleMode = .resizeFill // Scale the scene to fill the SKView
         skView.presentScene(scene) // Attach the scene to the SKView
-        skView.allowsTransparency = true // Optional: Allows transparent backgrounds
-        skView.isMultipleTouchEnabled = true
+       
         return skView
     }
     
@@ -34,11 +45,13 @@ struct MainView: View {
     @State private var startStopBool = false
     var body: some View {
         ZStack {
-            SpriteKitBackgroundView() // The glowing SpriteKit background
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .edgesIgnoringSafeArea(.all) // Ensure it fills the entire screen
-                .navigationBarBackButtonHidden(true)
-                .environmentObject(viewModel)
+           
+            GeometryReader{ geometry in
+                SpriteKitBackgroundView(size: geometry.size)
+                    .environmentObject(viewModel)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .edgesIgnoringSafeArea(.all) // Ensure it fills the entire screen
+            }
             Button(action: {
                 if startStopBool == false{
                     viewModel.playSound()

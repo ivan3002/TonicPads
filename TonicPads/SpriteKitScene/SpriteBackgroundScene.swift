@@ -24,6 +24,11 @@ class MainPadsScene: SKScene {
     
     private var noteLabel: SKLabelNode!
     private var noteValueLabel: SKLabelNode!
+    private var noteNames: [String] = [
+        "C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb", "B", "C"
+    ]
+    private var currentIndex: Int = 0
+
     
     private var filterCutoffLabel: SKLabelNode!
     private var filterCutoffValueLabel: SKLabelNode!
@@ -33,6 +38,10 @@ class MainPadsScene: SKScene {
     
     private var normalizedDeltaX: CGFloat!
     private var normalizedDeltaY: CGFloat!
+    
+    private var accumulatedDeltaX: CGFloat = 0.0 // Tracks motion between updates
+    private var totalDeltaX: CGFloat = 0.0       // Tracks total motion for the gesture
+    
     private var startingX:CGFloat = 0
     private var currentDirection: Direction?
     
@@ -92,6 +101,10 @@ class MainPadsScene: SKScene {
             normalizedDeltaX = deltaX / maxWidth
             normalizedDeltaY = deltaY / maxHeight
             
+            // Accumulate the delta values
+            accumulatedDeltaX += normalizedDeltaX
+            totalDeltaX += normalizedDeltaX // Tracks total motion
+            
             //print("Normalized x: ", normalizedDeltaX, " y: ", normalizedDeltaY)
             
             // Determine the dominant direction of movement
@@ -138,11 +151,12 @@ class MainPadsScene: SKScene {
             let dx = endingPoint.x - startingPoint.x // Calculate horizontal distance
             let normalisedDX = dx / self.size.width
             if activeTouches.count == 1 && currentDirection == .x{
-                viewModel.updateFrequency(swipeDistance: normalisedDX)
+                viewModel.updateFrequency(swipeDistance: totalDeltaX)
             }
             
             fadeOutLabels()
-            
+            accumulatedDeltaX = 0 // Reset for next gesture
+            totalDeltaX = 0
         }
         for touch in touches {
             activeTouches.removeValue(forKey: touch)
@@ -188,7 +202,7 @@ class MainPadsScene: SKScene {
             volumeLabel.run(SKAction.fadeIn(withDuration: 0.8))
             
         }else if activeTouches.count == 1 && currentDirection == .x{
-            updateNoteLabel(s: normalizedDeltaX)
+            updateNoteLabel(steps: accumulatedDeltaX)
         }
     }
     
@@ -270,12 +284,12 @@ class MainPadsScene: SKScene {
              noteLabel.position = CGPoint(x: size.width/2, y: size.height * 0.9)
              addChild(noteLabel)
              
-             noteValueLabel = SKLabelNode(text: "Note: ")
+             noteValueLabel = SKLabelNode(text: noteNames[0])
              noteValueLabel.fontName = "Avenir"
              noteValueLabel.fontSize = 24
              noteValueLabel.fontColor = .white
              noteValueLabel.alpha = 0.0
-             noteValueLabel.position = CGPoint(x: size.width/2, y: size.height * 0.9)
+             noteValueLabel.position = CGPoint(x: size.width/2, y: size.height * 0.86)
              addChild(noteValueLabel)
          }
          
@@ -302,7 +316,7 @@ class MainPadsScene: SKScene {
         volumeValueLabel.position = CGPoint(x: size.width * 0.13, y: size.height/2)
         
         noteLabel.position = CGPoint(x: size.width/2, y: size.height * 0.9)
-        noteValueLabel.position = CGPoint(x: size.width/2, y: size.height * 0.8)
+        noteValueLabel.position = CGPoint(x: size.width/2, y: size.height * 0.86)
         
         reverbLabel.position = CGPoint(x: size.width * 0.09, y: size.height/2)
         reverbValueLabel.position = CGPoint(x: size.width * 0.13, y: size.height/2)
@@ -313,9 +327,31 @@ class MainPadsScene: SKScene {
     
     
     //little helper for Note Label
-    func updateNoteLabel(s: CGFloat){
-        noteLabel.run(SKAction.fadeIn(withDuration:1))
-        noteLabel.run(SKAction.rotate(byAngle: s, duration: 0.5))
+    func updateNoteLabel(steps: CGFloat) {
+        let stepThreshold: CGFloat = 0.05 // Sensitivity threshold for updates
+
+        // Process the accumulated delta if it exceeds the threshold
+        guard abs(accumulatedDeltaX) >= stepThreshold else { return }
+
+        let step = accumulatedDeltaX > 0 ? 1 : -1 // Determine direction
+        let newIndex = currentIndex + step
+
+        // Prevent updates if at the boundaries
+        guard newIndex >= 0 && newIndex < noteNames.count else {
+            accumulatedDeltaX -= stepThreshold * CGFloat(step) // Consume the delta even if at boundary
+            return
+        }
+
+        // Update the note index and label
+        currentIndex = newIndex
+        noteValueLabel.text = noteNames[currentIndex]
+
+        // Consume the processed delta
+        accumulatedDeltaX -= stepThreshold * CGFloat(step)
+
+        
+        noteLabel.run(SKAction.fadeIn(withDuration: 0.5))
+        noteValueLabel.run(SKAction.fadeIn(withDuration: 0.5))
         
     }
 }

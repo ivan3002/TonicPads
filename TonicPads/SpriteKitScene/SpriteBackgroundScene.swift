@@ -120,9 +120,9 @@ class MainPadsScene: SKScene {
                 
             }else if activeTouches.count == 1 && currentDirection == .x{
                 showLabels()
-            }else if activeTouches.count == 2 {
+            }else if activeTouches.count == 2 && currentDirection == .x{
                 viewModel.updateFilterCutoff(cutoffDistance: normalizedDeltaX)
-            } else if activeTouches.count == 3 {
+            } else if activeTouches.count == 3 && currentDirection == .y{
                 viewModel.updateReverbAmount(revAmount: normalizedDeltaY)
             }
             
@@ -137,8 +137,9 @@ class MainPadsScene: SKScene {
             let endingPoint = touch.location(in: self)
             let dx = endingPoint.x - startingPoint.x // Calculate horizontal distance
             let normalisedDX = dx / self.size.width
-            viewModel.updateFrequency(swipeDistance: normalisedDX)
-            
+            if activeTouches.count == 1 && currentDirection == .x{
+                viewModel.updateFrequency(swipeDistance: normalisedDX)
+            }
             
             fadeOutLabels()
             

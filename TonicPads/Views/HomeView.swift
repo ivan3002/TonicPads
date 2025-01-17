@@ -43,7 +43,7 @@ struct HomeView: View {
                         
                     }){
                         Text("How to use TonicPads")
-                            .font(.title)
+                            .font(.subheadline)
                             .foregroundColor(.white)
                             .padding()
                             .background(Color.teal)

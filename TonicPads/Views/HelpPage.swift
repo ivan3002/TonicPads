@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HelpPage: View {
+    let helpText = HelpText()
     var body: some View {
         VStack {
             // Title at the top
@@ -23,6 +24,9 @@ struct HelpPage: View {
             ScrollView{
                 HStack{
                     VStack(spacing: 10) { // Adjust spacing as needed
+                        Text(helpText.intro)
+                            .font(.body)
+                            .multilineTextAlignment(.leading)
                         
                         HStack {
                             Image("1") // Replace with your image
@@ -30,7 +34,7 @@ struct HelpPage: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 200, height: 200) // Adjust as needed
                             
-                            Text("Label")
+                            Text(helpText.oneVerticalFingerInfo)
                                 .font(.body)
                                 .multilineTextAlignment(.leading)
                         }
@@ -40,7 +44,7 @@ struct HelpPage: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 200, height: 200) // Adjust as needed
                             
-                            Text("Label")
+                            Text(helpText.oneHorizontalFingerInfo)
                                 .font(.body)
                                 .multilineTextAlignment(.leading)
                         }
@@ -50,7 +54,7 @@ struct HelpPage: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 200, height: 200) // Adjust as needed
                             
-                            Text("Label")
+                            Text(helpText.twoVerticalFingerInfo)
                                 .font(.body)
                                 .multilineTextAlignment(.leading)
                         }
@@ -60,7 +64,7 @@ struct HelpPage: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 200, height: 200) // Adjust as needed
                             
-                            Text("Label")
+                            Text(helpText.twoHorizontalFingerInfo)
                                 .font(.body)
                                 .multilineTextAlignment(.leading)
                         }
@@ -70,7 +74,7 @@ struct HelpPage: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 200, height: 200) // Adjust as needed
                             
-                            Text("Label")
+                            Text(helpText.threeFingerInfo)
                                 .font(.body)
                                 .multilineTextAlignment(.leading)
                         }

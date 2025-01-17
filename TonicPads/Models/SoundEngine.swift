@@ -29,7 +29,7 @@ class SoundEngine {
     
     var engineInstance = AudioEngine()
     
-    private var volume: AUValue = 0.1
+    var volume: AUValue = 0.1
     private var frequency: AUValue = 261.63
     
     var oscillators: [Oscillator]

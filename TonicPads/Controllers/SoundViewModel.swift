@@ -30,7 +30,7 @@ class SoundViewModel: ObservableObject {
         print(swipeDistance)
         
         
-        let dxRange: CGFloat = 0.1 // Define sensitivity for a full note step
+        let dxRange: CGFloat = 0.05 // Define sensitivity for a full note step
         let steps = Int(swipeDistance / dxRange) // Calculate steps from swipe distance
         
           

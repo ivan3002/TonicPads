@@ -9,12 +9,15 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var hueRotationAngle: Double = 0
-    @State private var showMainView: Bool = false
+    @State var showMainView = false
+    @State private var showHelp = false
+    
 
     var body: some View {
         ZStack {
-            if showMainView {
-                MainView()
+            if showMainView == true{
+                MainView(showMainView: $showMainView)
+                
             } else {
                 Color(red: 0.2, green: 0.4, blue: 0.5)
                     .edgesIgnoringSafeArea(.all)
@@ -28,17 +31,28 @@ struct HomeView: View {
                     Button(action: {
                         showMainView = true
                     }) {
-                        Text("Go Inside")
+                        Text("Go Inside!")
                             .font(.title)
                             .foregroundColor(.white)
                             .padding()
                             .background(Color.blue)
                             .cornerRadius(10)
                     }
-                    Text("Tutorial")
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
-                        .padding(.bottom, 20)
+                    Button(action: {
+                        showHelp = true
+                        
+                    }){
+                        Text("How to use TonicPads")
+                            .font(.title)
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.teal)
+                            .cornerRadius(10)
+                    }
+                    .sheet(isPresented: $showHelp) {
+                        // Embed HelpPage storyboard
+                        HelpPage()
+                    }
                 }
             }
         }

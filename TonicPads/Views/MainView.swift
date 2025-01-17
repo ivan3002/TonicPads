@@ -8,6 +8,98 @@
 import SwiftUI
 import SpriteKit
 
+struct MainView: View {
+    @StateObject private var viewModel = SoundViewModel()
+    @State private var showHelp = false
+    @State private var startStopBool = false
+    @Binding var showMainView: Bool // Accept a binding
+
+    
+    var body: some View {
+        ZStack {
+            
+            GeometryReader{ geometry in
+                SpriteKitBackgroundView(size: geometry.size)
+                    .environmentObject(viewModel)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .edgesIgnoringSafeArea(.all) // Ensure it fills the entire screen
+            }
+            //---------------------
+            VStack{
+                HStack{
+                    //--------------------------------
+                    Button(action: {
+                        showMainView = false 
+                        print("hi3")
+                    }){
+                        Image("icons8-back-48" )
+                            .resizable()
+                            .frame(width:50, height:50)
+                            
+                    }
+                    .padding(.leading, 30)
+                    
+                    Spacer()
+                    VStack{
+                        Button(action: {
+                            print("hi")
+                        }){
+                            Image("settings-icon-14963" )
+                                .resizable()
+                                .frame(width:50, height:50)
+                                
+                                
+                        }
+                        
+                        //--------------------------------
+                        Button(action: {
+                            print("hi2")
+                            showHelp = true
+                        }){
+                            Image("icons8-help-64" )
+                                .resizable()
+                                .frame(width:50, height:50)
+                                
+                        }
+                        .sheet(isPresented: $showHelp) {
+                            // Embed HelpPage storyboard
+                            HelpPage()
+                        }
+                    }
+                    .padding(.trailing, 30)
+                }
+                
+                .padding(.top, 16) // Add padding from the top edge
+                Spacer()
+            }
+            Button(action: {
+                if startStopBool == false{
+                    viewModel.playSound()
+                    startStopBool = true
+                }else{
+                    viewModel.stopSound()
+                    startStopBool = false
+                }
+                
+            }) {
+                Text("Sound Test")
+                
+            }
+            
+            
+        }
+    }
+}
+
+
+struct MainView_Previews: PreviewProvider {
+    @State static var showMainView = true
+    static var previews: some View {
+        MainView(showMainView: $showMainView)
+    }
+}
+
+//-------------------------------------------------------------------------------------------
 
 struct SpriteKitBackgroundView: UIViewRepresentable {
     
@@ -40,39 +132,6 @@ struct SpriteKitBackgroundView: UIViewRepresentable {
 
 
 
-struct MainView: View {
-    @StateObject private var viewModel = SoundViewModel()
-    @State private var startStopBool = false
-    var body: some View {
-        ZStack {
-           
-            GeometryReader{ geometry in
-                SpriteKitBackgroundView(size: geometry.size)
-                    .environmentObject(viewModel)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .edgesIgnoringSafeArea(.all) // Ensure it fills the entire screen
-            }
-            Button(action: {
-                if startStopBool == false{
-                    viewModel.playSound()
-                    startStopBool = true
-                }else{
-                    viewModel.stopSound()
-                    startStopBool = false
-                }
-                
-            }) {
-                Text("Sound Test")
-                
-            }
-        }
-    }
-}
 
-struct MainView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainView()
-    }
-}
 
 

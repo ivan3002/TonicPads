@@ -31,8 +31,8 @@ class MainPadsScene: SKScene {
     private var reverbLabel: SKLabelNode!
     private var reverbValueLabel: SKLabelNode!
     
-    private var dx: CGFloat = 0
-    private var dy:CGFloat = 0
+    private var normalizedDeltaX: CGFloat!
+    private var normalizedDeltaY: CGFloat!
     private var startingX:CGFloat = 0
     private var currentDirection: Direction?
     
@@ -89,10 +89,10 @@ class MainPadsScene: SKScene {
             // Normalize deltaX and deltaY based on screen size
             let maxWidth = self.size.width
             let maxHeight = self.size.height
-            let normalizedDeltaX = deltaX / maxWidth
-            let normalizedDeltaY = deltaY / maxHeight
+            normalizedDeltaX = deltaX / maxWidth
+            normalizedDeltaY = deltaY / maxHeight
             
-            print("Normalized x: ", normalizedDeltaX, " y: ", normalizedDeltaY)
+            //print("Normalized x: ", normalizedDeltaX, " y: ", normalizedDeltaY)
             
             // Determine the dominant direction of movement
             if abs(normalizedDeltaX) > abs(normalizedDeltaY) {
@@ -115,11 +115,11 @@ class MainPadsScene: SKScene {
             
             // Handle gestures based on the number of active touches
             if activeTouches.count == 1 && currentDirection == .y {
-                volumeLabel.run(SKAction.fadeIn(withDuration: 0.8))
+                showLabels()
                 viewModel.updateVolume(volumeDistance: normalizedDeltaY)
                 
             }else if activeTouches.count == 1 && currentDirection == .x{
-                updateNoteLabel(s: normalizedDeltaX)
+                showLabels()
             }else if activeTouches.count == 2 {
                 viewModel.updateFilterCutoff(cutoffDistance: normalizedDeltaX)
             } else if activeTouches.count == 3 {
@@ -137,14 +137,10 @@ class MainPadsScene: SKScene {
             let endingPoint = touch.location(in: self)
             let dx = endingPoint.x - startingPoint.x // Calculate horizontal distance
             let normalisedDX = dx / self.size.width
-            //print("Starting X: \(startingPoint.x), Ending X: \(endingPoint.x), dx: \(dx)")
+            viewModel.updateFrequency(swipeDistance: normalisedDX)
             
-            if activeTouches.count == 1{
-                viewModel.updateFrequency(swipeDistance: normalisedDX)
-                noteLabel.run(SKAction.fadeOut(withDuration: 1.5))
-                volumeLabel.run(SKAction.fadeOut(withDuration: 1.5))
-            }
             
+            fadeOutLabels()
             
         }
         for touch in touches {
@@ -183,6 +179,23 @@ class MainPadsScene: SKScene {
         let fadeOut = SKAction.fadeOut(withDuration: 0.5)
         let remove = SKAction.removeFromParent()
         circle.run(SKAction.sequence([fadeOut, remove]))
+    }
+    
+    
+    func showLabels(){
+        if activeTouches.count == 1 && currentDirection == .y {
+            volumeLabel.run(SKAction.fadeIn(withDuration: 0.8))
+            
+        }else if activeTouches.count == 1 && currentDirection == .x{
+            updateNoteLabel(s: normalizedDeltaX)
+        }
+    }
+    
+    func fadeOutLabels(){
+        if activeTouches.count == 1{
+            noteLabel.run(SKAction.fadeOut(withDuration: 1.5))
+            volumeLabel.run(SKAction.fadeOut(withDuration: 1.5))
+        }
     }
     
     
@@ -285,13 +298,13 @@ class MainPadsScene: SKScene {
         
         // Update the positions dynamically
         volumeLabel.position = CGPoint(x: size.width * 0.09, y: size.height/2)
-        volumeValueLabel.position = CGPoint(x: size.width * 0.09, y: size.height/2)
+        volumeValueLabel.position = CGPoint(x: size.width * 0.13, y: size.height/2)
         
-        noteLabel.position = CGPoint(x: size.width * 0.09, y: size.height/2)
-        noteValueLabel.position = CGPoint(x: size.width/2, y: size.height * 0.9)
+        noteLabel.position = CGPoint(x: size.width/2, y: size.height * 0.9)
+        noteValueLabel.position = CGPoint(x: size.width/2, y: size.height * 0.8)
         
         reverbLabel.position = CGPoint(x: size.width * 0.09, y: size.height/2)
-        reverbValueLabel.position = CGPoint(x: size.width * 0.09, y: size.height/2)
+        reverbValueLabel.position = CGPoint(x: size.width * 0.13, y: size.height/2)
         
         filterCutoffLabel.position = CGPoint(x: size.width * 0.09, y: size.height/2)
         filterCutoffValueLabel.position = CGPoint(x: size.width * 0.09, y: size.height/2)

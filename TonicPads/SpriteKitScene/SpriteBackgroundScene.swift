@@ -42,7 +42,7 @@ class MainPadsScene: SKScene {
     private var accumulatedDeltaX: CGFloat = 0.0 // Tracks motion between updates
     private var totalDeltaX: CGFloat = 0.0       // Tracks total motion for the gesture
     
-    private var startingX:CGFloat = 0
+   
     private var currentDirection: Direction?
     
     
@@ -146,14 +146,16 @@ class MainPadsScene: SKScene {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Remove ended touches from the dictionary
-        if let touch = touches.first, let startingPoint = activeTouches[touch] {
-            let endingPoint = touch.location(in: self)
-            let dx = endingPoint.x - startingPoint.x // Calculate horizontal distance
-            let normalisedDX = dx / self.size.width
-            if activeTouches.count == 1 && currentDirection == .x{
+        if let touch = touches.first, activeTouches[touch] != nil {
+            
+            if activeTouches.count == 1{
                 viewModel.updateFrequency(swipeDistance: totalDeltaX)
             }
             
+           if viewModel.getCurrentNoteIndex() != currentIndex{
+                currentIndex = viewModel.getCurrentNoteIndex()
+                noteValueLabel.text = noteNames[currentIndex]
+            }
             fadeOutLabels()
             accumulatedDeltaX = 0 // Reset for next gesture
             totalDeltaX = 0
@@ -328,27 +330,30 @@ class MainPadsScene: SKScene {
     
     //little helper for Note Label
     func updateNoteLabel(steps: CGFloat) {
+        
+        
+        
         let stepThreshold: CGFloat = 0.05 // Sensitivity threshold for updates
 
         // Process the accumulated delta if it exceeds the threshold
-        guard abs(accumulatedDeltaX) >= stepThreshold else { return }
+        guard abs(accumulatedDeltaX) >= stepThreshold  else{ return }
 
         let step = accumulatedDeltaX > 0 ? 1 : -1 // Determine direction
         let newIndex = currentIndex + step
 
         // Prevent updates if at the boundaries
-        guard newIndex >= 0 && newIndex < noteNames.count else {
+        guard newIndex >= 0 && newIndex < noteNames.count else{
             accumulatedDeltaX -= stepThreshold * CGFloat(step) // Consume the delta even if at boundary
             return
+            
         }
-
         // Update the note index and label
         currentIndex = newIndex
         noteValueLabel.text = noteNames[currentIndex]
-
+            
         // Consume the processed delta
         accumulatedDeltaX -= stepThreshold * CGFloat(step)
-
+            
         
         noteLabel.run(SKAction.fadeIn(withDuration: 0.5))
         noteValueLabel.run(SKAction.fadeIn(withDuration: 0.5))

@@ -11,7 +11,7 @@ import SpriteKit
 struct MainView: View {
     @StateObject private var viewModel = SoundViewModel()
     @State private var showHelp = false
-    @State private var startStopBool = false
+    @State private var isPlaying = false
     @Binding var showMainView: Bool // Accept a binding
 
     
@@ -72,18 +72,23 @@ struct MainView: View {
                 .padding(.top, 16) // Add padding from the top edge
                 Spacer()
             }
-            Button(action: {
-                if startStopBool == false{
-                    viewModel.playSound()
-                    startStopBool = true
-                }else{
-                    viewModel.stopSound()
-                    startStopBool = false
-                }
-                
-            }) {
-                Text("Sound Test")
-                
+            
+            Spacer()
+            // Toggle for Play/Pause
+            VStack {
+                Spacer()
+                Toggle("", isOn: $isPlaying)
+                    .labelsHidden()
+                    .padding(.bottom, 40)
+                    .onChange(of: isPlaying) { newValue in
+                        if newValue {
+                            viewModel.playSound()
+                        } else {
+                            viewModel.stopSound()
+                        }
+                    }
+                    .hueRotation(Angle(degrees: 70))
+                    
             }
             
             
@@ -98,6 +103,7 @@ struct MainView_Previews: PreviewProvider {
         MainView(showMainView: $showMainView)
     }
 }
+
 
 //-------------------------------------------------------------------------------------------
 

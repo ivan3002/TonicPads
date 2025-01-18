@@ -103,7 +103,11 @@ class SoundViewModel: ObservableObject {
         
         soundEngine.setReverb(dryWet: newDryWet )
         
+    }
+    
+    func updateComplexity(complexity: CGFloat){
         
+        soundEngine.complexityAlg(c: complexity)
     }
     
     

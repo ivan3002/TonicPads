@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		736A247D2D3B1EB300B78A12 /* DunneAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 736A247C2D3B1EB300B78A12 /* DunneAudioKit */; };
+		736A247F2D3B70AB00B78A12 /* SettingsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736A247E2D3B70AB00B78A12 /* SettingsPage.swift */; };
 		7374AB0C2D2D7CF600C179F5 /* SoundViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374AB0B2D2D7CF600C179F5 /* SoundViewModel.swift */; };
 		7374AB102D2D805A00C179F5 /* SpriteBackgroundScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374AB0E2D2D805A00C179F5 /* SpriteBackgroundScene.swift */; };
 		73C23AAB2CF8BC76001486CB /* TonicPadsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C23AAA2CF8BC76001486CB /* TonicPadsApp.swift */; };
@@ -43,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		736A247E2D3B70AB00B78A12 /* SettingsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPage.swift; sourceTree = "<group>"; };
 		7374AB0B2D2D7CF600C179F5 /* SoundViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundViewModel.swift; sourceTree = "<group>"; };
 		7374AB0E2D2D805A00C179F5 /* SpriteBackgroundScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteBackgroundScene.swift; sourceTree = "<group>"; };
 		73C23AA72CF8BC76001486CB /* TonicPads.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TonicPads.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,6 +72,7 @@
 			files = (
 				73DF45AC2D1637F600D5CA8A /* SoundpipeAudioKit in Frameworks */,
 				73DBEA862D0C95AA004C0D23 /* AudioKit in Frameworks */,
+				736A247D2D3B1EB300B78A12 /* DunneAudioKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,6 +176,7 @@
 				73DBEA782D0C7D5A004C0D23 /* MainView.swift */,
 				73C391A42D39F07E00C37793 /* HelpPage.swift */,
 				73C391A62D3A01B700C37793 /* HelpText.swift */,
+				736A247E2D3B70AB00B78A12 /* SettingsPage.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -203,6 +208,7 @@
 			packageProductDependencies = (
 				73DBEA852D0C95AA004C0D23 /* AudioKit */,
 				73DF45AB2D1637F600D5CA8A /* SoundpipeAudioKit */,
+				736A247C2D3B1EB300B78A12 /* DunneAudioKit */,
 			);
 			productName = TonicPads;
 			productReference = 73C23AA72CF8BC76001486CB /* TonicPads.app */;
@@ -279,6 +285,7 @@
 			packageReferences = (
 				73DBEA842D0C95AA004C0D23 /* XCRemoteSwiftPackageReference "AudioKit" */,
 				73DF45AA2D1637F600D5CA8A /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */,
+				736A247B2D3B1EB300B78A12 /* XCRemoteSwiftPackageReference "DunneAudioKit" */,
 			);
 			productRefGroup = 73C23AA82CF8BC76001486CB /* Products */;
 			projectDirPath = "";
@@ -323,6 +330,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				736A247F2D3B70AB00B78A12 /* SettingsPage.swift in Sources */,
 				73C391A52D39F07E00C37793 /* HelpPage.swift in Sources */,
 				73DBEA7B2D0C7D82004C0D23 /* HomeView.swift in Sources */,
 				7374AB102D2D805A00C179F5 /* SpriteBackgroundScene.swift in Sources */,
@@ -659,6 +667,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		736A247B2D3B1EB300B78A12 /* XCRemoteSwiftPackageReference "DunneAudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/DunneAudioKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		73DBEA842D0C95AA004C0D23 /* XCRemoteSwiftPackageReference "AudioKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AudioKit/AudioKit.git";
@@ -678,6 +694,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		736A247C2D3B1EB300B78A12 /* DunneAudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 736A247B2D3B1EB300B78A12 /* XCRemoteSwiftPackageReference "DunneAudioKit" */;
+			productName = DunneAudioKit;
+		};
 		73DBEA852D0C95AA004C0D23 /* AudioKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 73DBEA842D0C95AA004C0D23 /* XCRemoteSwiftPackageReference "AudioKit" */;

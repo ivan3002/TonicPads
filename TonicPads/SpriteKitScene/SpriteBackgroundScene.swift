@@ -130,12 +130,13 @@ class MainPadsScene: SKScene {
             if activeTouches.count == 1 && currentDirection == .y {
                 showLabels()
                 viewModel.updateVolume(volumeDistance: normalizedDeltaY)
-                
             }else if activeTouches.count == 1 && currentDirection == .x{
                 showLabels()
             }else if activeTouches.count == 2 && currentDirection == .x{
                 viewModel.updateFilterCutoff(cutoffDistance: normalizedDeltaX)
-            } else if activeTouches.count == 3 && currentDirection == .y{
+            }else if activeTouches.count == 2 && currentDirection == .y{
+                viewModel.updateComplexity(complexity: normalizedDeltaY)
+            }else if activeTouches.count == 3 && currentDirection == .y{
                 viewModel.updateReverbAmount(revAmount: normalizedDeltaY)
             }
             
@@ -211,6 +212,7 @@ class MainPadsScene: SKScene {
     func fadeOutLabels(){
         if activeTouches.count == 1{
             noteLabel.run(SKAction.fadeOut(withDuration: 1.5))
+            noteValueLabel.run(SKAction.fadeOut(withDuration: 1.5))
             volumeLabel.run(SKAction.fadeOut(withDuration: 1.5))
         }
     }

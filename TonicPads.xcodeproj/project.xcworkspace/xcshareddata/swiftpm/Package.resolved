@@ -19,6 +19,15 @@
       }
     },
     {
+      "identity" : "dunneaudiokit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/AudioKit/DunneAudioKit.git",
+      "state" : {
+        "revision" : "dd0a417239ba345e03ca8ffe936d052d6a8239ea",
+        "version" : "5.6.1"
+      }
+    },
+    {
       "identity" : "kissfft",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/AudioKit/KissFFT",

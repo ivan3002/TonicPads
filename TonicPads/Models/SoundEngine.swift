@@ -8,6 +8,7 @@
 import Foundation
 import AudioKit
 import SoundpipeAudioKit
+import DunneAudioKit
 
 class SoundEngine {
     
@@ -27,52 +28,121 @@ class SoundEngine {
         523.25 //C5
     ]
     
+    let twelveTETIntervals: [Float] = [
+        1.0, //root
+        pow(2.0, 7.0 / 12.0),  // Perfect 5th
+        pow(2.0, 14.0 / 12.0), // Major 9th
+        pow(2.0, 2.0 / 12.0),  // Major 2nd
+        pow(2.0, 9.0 / 12.0),  // Major 6th
+        pow(2.0, -12.0 / 12.0) // Sub-Octave
+        
+        
+    ]
+    
+    let justIntonatedIntervals: [Float] = [
+        1.0, //root
+        1.5,   // Perfect 5th (3:2 ratio)
+        2.0,   // Octave (2:1 ratio) --> Major 9th includes octave + major second
+        9.0 / 8.0, // Major 2nd (9:8 ratio)
+        5.0 / 3.0, // Major 6th (5:3 ratio)
+        0.5    // Sub-octave (1:2 ratio)
+        
+    ]
+    
+    private var istwelveTET = Bool(true)
+    
     var engineInstance = AudioEngine()
     
     var volume: AUValue = 0.1
     private var frequency: AUValue = 261.63
     
-    var oscillators: [Oscillator]
+    
+    var oscillators: [MorphingOscillator]
     var waveforms: Table
     var reverb: CostelloReverb
+    var chorus: Chorus
+    var chorusAmount: AUValue = 0
+    var flanger: Flanger
+    var flangeAmount: AUValue = 0
+    
     var lowPass: LowPassButterworthFilter
     var dryWetMix: AUValue = 0.5
     
     let drySignal: Mixer
     let wetSignal: Mixer
     let finalMix: Mixer
-
+    
     init() {
         waveforms = Table()
         waveforms.square(harmonicCount: 10, clear: true)
         oscillators = []
-    
+        
         // Initialize 6 oscillators
         for _ in 0..<6 {
-            let osc = Oscillator(waveform: waveforms)
-            osc.amplitude = volume
+            let osc = MorphingOscillator()
+            
+            //waveformArray: [Table] = [Table(.triangle), Table(.square), Table(.sine), Table(.sawtooth)]
+            osc.index = AUValue(3)
+            
             osc.frequency = frequency
+            
+            
+            osc.detuningOffset = AUValue(0)
+            osc.detuningMultiplier = AUValue(1)
+            
+            // Store the oscillator in the array
             oscillators.append(osc)
         }
         
+        
+        oscillators[0].amplitude = volume
+        oscillators[1].amplitude = 0
+        oscillators[2].amplitude = 0
+        oscillators[3].amplitude = 0
+        oscillators[4].amplitude = 0
+        oscillators[5].amplitude = 0
+        print("Initial root frequency: \(frequency) Hz")
+        print("Oscillator[0] frequency: \(oscillators[0].frequency) Hz")
+        
         let mixer = Mixer(oscillators)
         
-        lowPass = LowPassButterworthFilter(mixer, cutoffFrequency: 20000)
+        chorus = Chorus(mixer, frequency: 0.2, depth: 0.4, feedback: 0, dryWetMix: chorusAmount)
+        lowPass = LowPassButterworthFilter(chorus, cutoffFrequency: 1000)
+        flanger = Flanger(lowPass,frequency: 0.2, depth: 0.8, feedback: 0.8, dryWetMix: flangeAmount)
+        
+        
+        
+        
         reverb = CostelloReverb(lowPass, feedback: 0.9, cutoffFrequency: 7000)
         
-        drySignal = Mixer(lowPass) // Unprocessed signal
+        
+        drySignal = Mixer(flanger) // Unprocessed signal
         wetSignal = Mixer(reverb) // Processed signal
         finalMix = Mixer(drySignal, wetSignal) // Combine both signals
-
+        
         engineInstance.output = finalMix
         
         
-
+        setOscIntervals()
         
         print("SoundEngine setup complete.")
     }
-
-
+    
+    
+    func setOscIntervals(){
+        // chooses the interval set based on the current tuning system
+        let intervals = istwelveTET ? twelveTETIntervals : justIntonatedIntervals
+        // Update each oscillator's frequency based on the intervals
+        for (index, interval) in intervals.enumerated() {
+            if index > 0 && index < oscillators.count {
+                // Set oscillator frequency to the base frequency * interval
+                oscillators[index].frequency = oscillators[0].frequency * interval
+            }
+        }
+        
+    }
+    
+    
     func startSound() {
         oscillators.forEach{$0.start()}
         do {
@@ -82,24 +152,47 @@ class SoundEngine {
             print("Error starting audio engine: \(error.localizedDescription)")
         }
     }
-
+    
     func stopSound() {
         oscillators.forEach { $0.stop() }
         engineInstance.stop()
         print("Audio engine stopped.")
     }
-
+    
     func setVolume(v: CGFloat) {
-       
-        let newVolume = min(max(volume + Float(v), 0.0), 1.0)
-        oscillators.forEach{$0.amplitude = AUValue(newVolume)}
+        // Clamp the new volume to the range [0.0, 0.5]
+        let newVolume = min(max(volume + AUValue(v), 0.0), 0.5)
+        
+        // Update the root oscillator's amplitude
+        oscillators[0].amplitude = AUValue(newVolume)
+        
+        // Define a scale factor for the other oscillators
+        let scaleFactor: AUValue = 0.8 // Adjust this to control harmonic amplitude scaling
+        
+        // Update the amplitudes of the other oscillators
+        for (index, oscillator) in oscillators.enumerated() {
+            if index > 0 {
+                // Only scale if the oscillator's amplitude is greater than 0 and ensure it doesn't exceed the root note
+                if oscillator.amplitude > 0.0 {
+                    let scaledAmplitude = newVolume * scaleFactor
+                    oscillator.amplitude = min(scaledAmplitude, newVolume) // Clamp to root note's volume
+                    //print("Oscillator[\(index)] Amplitude: \(oscillator.amplitude)")
+                } else {
+                    // Oscillator amplitude remains 0 if it was initially 0
+                    //print("Oscillator[\(index)] Amplitude remains: 0.0")
+                }
+            }
+        }
+        
+        // Update the stored volume
         volume = newVolume
-        //print("Amplitude set to: \(oscillators.amplitude)")
     }
     
     func setFrequency(f: AUValue){
         // Predefined frequencies for the 12 notes in the chromatic scale (starting from A4 = 440 Hz)
-        oscillators.forEach{$0.frequency = f}
+        //oscillators.forEach{$0.frequency = f}
+        oscillators[0].frequency = f
+        setOscIntervals()
     }
     
     func setCutoff(lopass: CGFloat){
@@ -110,7 +203,7 @@ class SoundEngine {
         drySignal.volume = dry
         wetSignal.volume = wet
         dryWetMix = wet // Keep track of wet level for debugging
-        print("Dry/Wet Mix - Dry: \(dry), Wet: \(wet)")
+        //print("Dry/Wet Mix - Dry: \(dry), Wet: \(wet)")
     }
     
     func setReverb(dryWet:AUValue){
@@ -119,4 +212,66 @@ class SoundEngine {
         let wet = dryWet
         setDryWetMix(dry: dry, wet: wet)
     }
-}
+    
+    func complexityAlg(c: CGFloat) {
+        
+        // Calculate coefficients for chorus and flange
+        let chorusCoef = min(max(chorusAmount + AUValue(c), 0.0), 0.5)
+        let flangeCoef = min(max(flangeAmount + AUValue(c), 0.0), 0.8)
+        
+        // Update modulation effects
+        chorusAmount = chorusCoef
+        flangeAmount = flangeCoef
+        chorus.dryWetMix = AUValue(chorusCoef)
+        flanger.dryWetMix = AUValue(flangeCoef)
+        
+        //print("Chorus Coefficient: \(chorusCoef), Flange Coefficient: \(flangeCoef)")
+        
+        // Base volume step for each harmonic (scaled by complexity)
+        let harmonicStep = c  // Adjust scaling as needed
+        print(harmonicStep)
+        
+        if harmonicStep>0 {
+            for (index, oscillator) in oscillators.enumerated() {
+                if index == 0 {
+                    // Root oscillator remains at fixed volume
+                    oscillator.amplitude = volume
+                } else {
+                    // Check if the previous oscillator has reached its max amplitude
+                    if oscillators[index - 1].amplitude == volume {
+                        // Incrementally increase this oscillator's amplitude
+                        let newHarmVolume = min(max(oscillator.amplitude + AUValue(harmonicStep), 0.0), volume)
+                        oscillator.amplitude = newHarmVolume
+                        
+                        //print("Oscillator[\(index)] Amplitude: \(oscillator.amplitude)")
+                        
+                        // Stop introducing new harmonics if this one isn't maxed out
+                        if oscillator.amplitude < volume {
+                            break
+                        }
+                    }
+                }
+            }
+        }else {
+            // Removing notes (decreasing complexity)
+            for (index, oscillator) in oscillators.enumerated().reversed() {
+                if index == 0 {
+                    // Root oscillator remains at fixed volume
+                    oscillator.amplitude = volume
+                } else {
+                                        // Decrease the amplitude of the previous oscillator
+                    let newHarmVolumeDec = max(oscillator.amplitude + AUValue(harmonicStep), 0.0) //adding because negative value
+                    oscillator.amplitude = newHarmVolumeDec
+                    
+                    //print("Oscillator[\(index)] Amplitude (Decreasing): \(oscillator.amplitude)")
+                    
+                    // Stop removing notes if this one isn't fully off
+                    if oscillator.amplitude > 0.0 {
+                        break
+                        }
+                    }
+                }
+            }
+        }
+    }
+

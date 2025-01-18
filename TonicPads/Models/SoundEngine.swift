@@ -101,8 +101,8 @@ class SoundEngine {
         oscillators[3].amplitude = 0
         oscillators[4].amplitude = 0
         oscillators[5].amplitude = 0
-        print("Initial root frequency: \(frequency) Hz")
-        print("Oscillator[0] frequency: \(oscillators[0].frequency) Hz")
+       // print("Initial root frequency: \(frequency) Hz")
+        //print("Oscillator[0] frequency: \(oscillators[0].frequency) Hz")
         
         let mixer = Mixer(oscillators)
         

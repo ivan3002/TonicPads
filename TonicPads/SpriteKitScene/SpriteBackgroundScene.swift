@@ -67,6 +67,14 @@ class MainPadsScene: SKScene {
         
         print("Scene size changed to \(size)")
         
+        // Add the particle emitter
+        if let particleEmitter = SKEmitterNode(fileNamed: "MainBackground.sks") {
+            particleEmitter.position = CGPoint(x: size.width/2, y: size.height/2)
+            particleEmitter.particlePositionRange = CGVector(dx: size.width, dy: size.height)
+            particleEmitter.zPosition = -1 //making lowest layer of scene
+            addChild(particleEmitter)
+        }
+        
         initLabels()
         
     }
@@ -188,7 +196,7 @@ class MainPadsScene: SKScene {
     //-----------------------------------------**Animations**-----------------------------------------------
     
     func visualiseTouch(at location: CGPoint) {
-        let circle = SKShapeNode(circleOfRadius: 2)
+        let circle = SKShapeNode(circleOfRadius: 4)
         circle.position = location
         circle.fillColor = .cyan
         circle.alpha = 0.7

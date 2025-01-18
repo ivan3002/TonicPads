@@ -85,7 +85,15 @@ struct MainView: View {
                 Spacer()
                 // Toggle for Play/Pause
                 VStack {
+                    
                     Spacer()
+                    
+                    if !isPlaying {
+                            Text("Sound is OFF. Tap to toggle sound.")
+                            .font(.custom("AvenirNext-Bold", size: 20))
+                            .foregroundColor(.red)
+                            .padding(.bottom, 8) // Add some spacing above the toggle
+                        }
                     Toggle("", isOn: $isPlaying)
                         .labelsHidden()
                         .padding(.bottom, 40)
@@ -129,9 +137,7 @@ struct MainView: View {
             let skView = SKView() // Create an SKView instance
             skView.allowsTransparency = true // Optional: Allows transparent backgrounds
             skView.isMultipleTouchEnabled = true
-            //print("makeUIView: SKView bounds at creation: \(skView.bounds.size)")
             
-            print("makeUIView: Passing size to scene: \(size)")
             let scene = MainPadsScene(size: size) // Create the SpriteKit scene
             scene.viewModel = viewModel
             scene.scaleMode = .resizeFill // Scale the scene to fill the SKView

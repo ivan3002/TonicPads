@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		736A247D2D3B1EB300B78A12 /* DunneAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 736A247C2D3B1EB300B78A12 /* DunneAudioKit */; };
 		736A247F2D3B70AB00B78A12 /* SettingsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736A247E2D3B70AB00B78A12 /* SettingsPage.swift */; };
+		736A24822D3B844F00B78A12 /* MainBackground.sks in Resources */ = {isa = PBXBuildFile; fileRef = 736A24802D3B844F00B78A12 /* MainBackground.sks */; };
+		736A24832D3B844F00B78A12 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 736A24812D3B844F00B78A12 /* Assets.xcassets */; };
 		7374AB0C2D2D7CF600C179F5 /* SoundViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374AB0B2D2D7CF600C179F5 /* SoundViewModel.swift */; };
 		7374AB102D2D805A00C179F5 /* SpriteBackgroundScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374AB0E2D2D805A00C179F5 /* SpriteBackgroundScene.swift */; };
 		73C23AAB2CF8BC76001486CB /* TonicPadsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C23AAA2CF8BC76001486CB /* TonicPadsApp.swift */; };
@@ -46,6 +48,8 @@
 
 /* Begin PBXFileReference section */
 		736A247E2D3B70AB00B78A12 /* SettingsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPage.swift; sourceTree = "<group>"; };
+		736A24802D3B844F00B78A12 /* MainBackground.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainBackground.sks; sourceTree = "<group>"; };
+		736A24812D3B844F00B78A12 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7374AB0B2D2D7CF600C179F5 /* SoundViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundViewModel.swift; sourceTree = "<group>"; };
 		7374AB0E2D2D805A00C179F5 /* SpriteBackgroundScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteBackgroundScene.swift; sourceTree = "<group>"; };
 		73C23AA72CF8BC76001486CB /* TonicPads.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TonicPads.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,6 +101,8 @@
 			isa = PBXGroup;
 			children = (
 				7374AB0E2D2D805A00C179F5 /* SpriteBackgroundScene.swift */,
+				736A24802D3B844F00B78A12 /* MainBackground.sks */,
+				736A24812D3B844F00B78A12 /* Assets.xcassets */,
 			);
 			path = SpriteKitScene;
 			sourceTree = "<group>";
@@ -305,7 +311,9 @@
 			files = (
 				73DBEA772D0C7A18004C0D23 /* LaunchScreen.storyboard in Resources */,
 				73C23AB22CF8BC77001486CB /* Preview Assets.xcassets in Resources */,
+				736A24822D3B844F00B78A12 /* MainBackground.sks in Resources */,
 				73C23AAF2CF8BC77001486CB /* Assets.xcassets in Resources */,
+				736A24832D3B844F00B78A12 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

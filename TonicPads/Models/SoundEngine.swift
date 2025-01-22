@@ -51,6 +51,7 @@ class SoundEngine {
     
     private var istwelveTET = Bool(true)
     
+    var envelope: AmplitudeEnvelope
     var engineInstance = AudioEngine()
     
     var volume: AUValue = 0.1
@@ -66,13 +67,19 @@ class SoundEngine {
     var flangeAmount: AUValue = 0
     
     var lowPass: LowPassButterworthFilter
+    var cutoff: AUValue = 0
+    
     var dryWetMix: AUValue = 0.5
     
     let drySignal: Mixer
     let wetSignal: Mixer
     let finalMix: Mixer
     
+    var complexity = 0.0
+    
     init() {
+        
+        
         waveforms = Table()
         waveforms.square(harmonicCount: 10, clear: true)
         oscillators = []
@@ -120,7 +127,13 @@ class SoundEngine {
         wetSignal = Mixer(reverb) // Processed signal
         finalMix = Mixer(drySignal, wetSignal) // Combine both signals
         
-        engineInstance.output = finalMix
+        envelope = AmplitudeEnvelope(finalMix)
+        envelope.attackDuration = 1
+        envelope.sustainLevel = 1
+        envelope.decayDuration = 0.1
+        envelope.releaseDuration = 1
+        
+        engineInstance.output = envelope
         
         
         setOscIntervals()
@@ -144,6 +157,7 @@ class SoundEngine {
     
     
     func startSound() {
+        
         oscillators.forEach{$0.start()}
         do {
             try engineInstance.start()
@@ -151,6 +165,7 @@ class SoundEngine {
         } catch {
             print("Error starting audio engine: \(error.localizedDescription)")
         }
+        
     }
     
     func stopSound() {
@@ -197,6 +212,7 @@ class SoundEngine {
     
     func setCutoff(lopass: CGFloat){
         lowPass.cutoffFrequency = AUValue(lopass)
+        cutoff = AUValue(lopass)
     }
     
     func setDryWetMix(dry: AUValue, wet: AUValue) {
@@ -215,6 +231,7 @@ class SoundEngine {
     
     func complexityAlg(c: CGFloat) {
         
+        complexity = c
         // Calculate coefficients for chorus and flange
         let chorusCoef = min(max(chorusAmount + AUValue(c), 0.0), 0.5)
         let flangeCoef = min(max(flangeAmount + AUValue(c), 0.0), 0.8)

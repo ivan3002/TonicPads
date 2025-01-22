@@ -36,6 +36,9 @@ class MainPadsScene: SKScene {
     private var reverbLabel: SKLabelNode!
     private var reverbValueLabel: SKLabelNode!
     
+    private var complexityLabel: SKLabelNode!
+    private var complexityValueLabel: SKLabelNode!
+    
     private var normalizedDeltaX: CGFloat!
     private var normalizedDeltaY: CGFloat!
     
@@ -59,7 +62,7 @@ class MainPadsScene: SKScene {
         
         
         print("Scene initialized with size: \(size)")
-        
+        initLabels()
     }
     
     //did this because size is initialising to 0,0 if done in didMove() for some reason
@@ -142,10 +145,13 @@ class MainPadsScene: SKScene {
                 showLabels()
             }else if activeTouches.count == 2 && currentDirection == .x{
                 viewModel.updateFilterCutoff(cutoffDistance: normalizedDeltaX)
+                showLabels()
             }else if activeTouches.count == 2 && currentDirection == .y{
                 viewModel.updateComplexity(complexity: normalizedDeltaY)
+                showLabels()
             }else if activeTouches.count == 3 && currentDirection == .y{
                 viewModel.updateReverbAmount(revAmount: normalizedDeltaY)
+                showLabels()
             }
             
             // Optional: Visualize or act on the touch
@@ -184,7 +190,9 @@ class MainPadsScene: SKScene {
         for touch in touches {
             activeTouches.removeValue(forKey: touch)
         }
+        fadeOutLabels()
         printActiveFingers()
+        
     }
     
     
@@ -210,19 +218,72 @@ class MainPadsScene: SKScene {
     
     func showLabels(){
         if activeTouches.count == 1 && currentDirection == .y {
+            
+            volumeValueLabel.text = viewModel.getCurrentVolumeAsString()
             volumeLabel.run(SKAction.fadeIn(withDuration: 0.8))
+            volumeValueLabel.run(SKAction.fadeIn(withDuration: 0.8))
+            
+            //In the case that labels in the same position don't disappear fade them out here
+            complexityLabel.run(SKAction.fadeOut(withDuration: 0.5))
+            complexityValueLabel.run(SKAction.fadeOut(withDuration: 0.5))
+            reverbLabel.run(SKAction.fadeOut(withDuration: 0.5))
+            reverbValueLabel.run(SKAction.fadeOut(withDuration: 0.5))
             
         }else if activeTouches.count == 1 && currentDirection == .x{
             updateNoteLabel(steps: accumulatedDeltaX)
+            
+            //In the case that labels in the same position don't disappear fade them out here
+            filterCutoffLabel.run(SKAction.fadeOut(withDuration: 0.5))
+            filterCutoffValueLabel.run(SKAction.fadeOut(withDuration: 0.5))
+            
+        }else if activeTouches.count == 2 && currentDirection == .y{
+            complexityValueLabel.text = viewModel.getComplexityAsString()
+            complexityLabel.run(SKAction.fadeIn(withDuration: 0.8))
+            complexityValueLabel.run(SKAction.fadeIn(withDuration: 0.8))
+            
+            //In the case that labels in the same position don't disappear fade them out here
+            volumeLabel.run(SKAction.fadeOut(withDuration: 0.5))
+            volumeValueLabel.run(SKAction.fadeOut(withDuration: 0.5))
+            reverbLabel.run(SKAction.fadeOut(withDuration: 0.5))
+            reverbValueLabel.run(SKAction.fadeOut(withDuration: 0.5))
+            
+        }else if activeTouches.count == 2 && currentDirection == .x{
+            
+            filterCutoffValueLabel.text = viewModel.getCurrentFilterCutoffAsString()
+            filterCutoffLabel.run(SKAction.fadeIn(withDuration: 0.8))
+            filterCutoffValueLabel.run(SKAction.fadeIn(withDuration: 0.8))
+            
+            //In the case that labels in the same position don't disappear fade them out here
+            noteLabel.run(SKAction.fadeOut(withDuration: 0.5))
+            noteValueLabel.run(SKAction.fadeOut(withDuration: 0.5))
+          
+        }else if activeTouches.count == 3 && currentDirection == .y{
+            
+            reverbValueLabel.text = viewModel.getCurrentReverbAmountAsString()
+            reverbLabel.run(SKAction.fadeIn(withDuration: 0.8))
+            reverbValueLabel.run(SKAction.fadeIn(withDuration: 0.8))
+            
+            //In the case that labels in the same position don't disappear fade them out here
+            complexityLabel.run(SKAction.fadeOut(withDuration: 0.5))
+            complexityValueLabel.run(SKAction.fadeOut(withDuration: 0.5))
+            volumeLabel.run(SKAction.fadeOut(withDuration: 0.5))
+            volumeValueLabel.run(SKAction.fadeOut(withDuration: 0.5))
         }
     }
     
     func fadeOutLabels(){
-        if activeTouches.count == 1{
-            noteLabel.run(SKAction.fadeOut(withDuration: 1.5))
-            noteValueLabel.run(SKAction.fadeOut(withDuration: 1.5))
-            volumeLabel.run(SKAction.fadeOut(withDuration: 1.5))
-        }
+
+        noteLabel.run(SKAction.fadeOut(withDuration: 1.5))
+        noteValueLabel.run(SKAction.fadeOut(withDuration: 1.5))
+        volumeLabel.run(SKAction.fadeOut(withDuration: 1.5))
+        volumeValueLabel.run(SKAction.fadeOut(withDuration: 1.5))
+        filterCutoffLabel.run(SKAction.fadeOut(withDuration: 1.5))
+        filterCutoffValueLabel.run(SKAction.fadeOut(withDuration: 1.5))
+        reverbLabel.run(SKAction.fadeOut(withDuration: 1.5))
+        reverbValueLabel.run(SKAction.fadeOut(withDuration: 1.5))
+        complexityLabel.run(SKAction.fadeOut(withDuration: 1.5))
+        complexityValueLabel.run(SKAction.fadeOut(withDuration: 1.5))
+        
     }
     
     
@@ -249,6 +310,7 @@ class MainPadsScene: SKScene {
     //---------------------------***Labels, Text & Buttons ***-----------------------------------------------------------
     
     private func initLabels(){
+        //-----------Labels on side----------------//
         
         if volumeLabel == nil{
             
@@ -258,14 +320,14 @@ class MainPadsScene: SKScene {
             volumeLabel.fontColor = .white
             volumeLabel.alpha = 0.0
             volumeLabel.position = CGPoint(x: size.width * 0.09, y: size.height/2)
+            addChild(volumeLabel)
             
-            volumeValueLabel = SKLabelNode(text: "Volume:" )
+            volumeValueLabel = SKLabelNode(text: "" )
             volumeValueLabel.fontName = "Avenir"
             volumeValueLabel.fontSize = 23
             volumeValueLabel.fontColor = .white
             volumeValueLabel.alpha = 0.0
-            volumeValueLabel.position = CGPoint(x: size.width * 0.09, y: size.height/2)
-            addChild(volumeLabel)
+            volumeValueLabel.position = CGPoint(x: size.width * 0.09, y: size.height * 0.47)
             addChild(volumeValueLabel)
         }
         
@@ -277,15 +339,38 @@ class MainPadsScene: SKScene {
              reverbLabel.fontColor = .white
              reverbLabel.alpha = 0.0
              reverbLabel.position = CGPoint(x: size.width * 0.09, y: size.height/2)
+             addChild(reverbLabel)
              
-             reverbValueLabel = SKLabelNode(text: "Reverb: ")
+             reverbValueLabel = SKLabelNode(text: "")
              reverbValueLabel.fontName = "Avenir"
              reverbValueLabel.fontSize = 24
              reverbValueLabel.fontColor = .white
              reverbValueLabel.alpha = 0.0
-             reverbValueLabel.position = CGPoint(x: size.width * 0.09, y: size.height/2)
-             
+             reverbValueLabel.position = CGPoint(x: size.width * 0.09, y: size.height * 0.47)
+             addChild(reverbValueLabel)
          }
+        
+        if complexityLabel == nil{
+            
+            complexityLabel = SKLabelNode(text: "Complexity: ")
+            complexityLabel.fontName = "Avenir"
+            complexityLabel.fontSize = 24
+            complexityLabel.fontColor = .white
+            complexityLabel.alpha = 0.0
+            complexityLabel.position = CGPoint(x: size.width * 0.09, y: size.height/2)
+            addChild(complexityLabel)
+            
+            complexityValueLabel = SKLabelNode(text: "")
+            complexityValueLabel.fontName = "Avenir"
+            complexityValueLabel.fontSize = 24
+            complexityValueLabel.fontColor = .white
+            complexityValueLabel.alpha = 0.0
+            complexityValueLabel.position = CGPoint(x: size.width * 0.09, y: size.height * 0.47)
+            addChild(complexityValueLabel)
+        }
+        
+        
+        //-------------------labels on top-------------//
          
          if noteLabel == nil{
              noteLabel = SKLabelNode(text: "Note: ")
@@ -311,30 +396,19 @@ class MainPadsScene: SKScene {
              filterCutoffLabel.fontSize = 24
              filterCutoffLabel.fontColor = .white
              filterCutoffLabel.alpha = 0.0
-             filterCutoffLabel.position = CGPoint(x: size.width * 0.12, y: size.height/2)
+             filterCutoffLabel.position = CGPoint(x: size.width/2, y: size.height * 0.9)
+             addChild(filterCutoffLabel)
              
-             filterCutoffValueLabel = SKLabelNode(text: "Filter Cutoff: ")
+             filterCutoffValueLabel = SKLabelNode(text: "")
              filterCutoffValueLabel.fontName = "Avenir"
              filterCutoffValueLabel.fontSize = 24
              filterCutoffValueLabel.fontColor = .white
              filterCutoffValueLabel.alpha = 0.0
-             filterCutoffValueLabel.position = CGPoint(x: size.width * 0.12, y: size.height/2)
+             filterCutoffValueLabel.position = CGPoint(x: size.width/2, y: size.height * 0.86)
+             addChild(filterCutoffValueLabel)
+             
          }
         
-        
-        
-        // Update the positions dynamically
-        volumeLabel.position = CGPoint(x: size.width * 0.09, y: size.height/2)
-        volumeValueLabel.position = CGPoint(x: size.width * 0.13, y: size.height/2)
-        
-        noteLabel.position = CGPoint(x: size.width/2, y: size.height * 0.9)
-        noteValueLabel.position = CGPoint(x: size.width/2, y: size.height * 0.86)
-        
-        reverbLabel.position = CGPoint(x: size.width * 0.09, y: size.height/2)
-        reverbValueLabel.position = CGPoint(x: size.width * 0.13, y: size.height/2)
-        
-        filterCutoffLabel.position = CGPoint(x: size.width * 0.09, y: size.height/2)
-        filterCutoffValueLabel.position = CGPoint(x: size.width * 0.09, y: size.height/2)
     }
     
     

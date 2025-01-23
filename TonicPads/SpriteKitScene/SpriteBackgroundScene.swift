@@ -71,10 +71,19 @@ class MainPadsScene: SKScene {
             particleEmitter.particlePositionRange = CGVector(dx: size.width, dy: size.height)
             particleEmitter.zPosition = -1 //making lowest layer of scene
             addChild(particleEmitter)
+           
         }
-        
-        
-        
+    
+    }
+    
+    func addChildren(){
+        initLabels()
+        if let particleEmitter = SKEmitterNode(fileNamed: "MainBackground.sks") {
+            particleEmitter.position = CGPoint(x: size.width/2, y: size.height/2)
+            particleEmitter.particlePositionRange = CGVector(dx: size.width, dy: size.height)
+            particleEmitter.zPosition = -1 //making lowest layer of scene
+            addChild(particleEmitter)
+        }
     }
     
     //---------------------***TouchFunctionality**-----------------------------------------------------------------------
@@ -290,18 +299,18 @@ class MainPadsScene: SKScene {
         if volumeLabel == nil{
             
             volumeLabel = SKLabelNode(text: "Volume:" )
-            volumeLabel.fontName = "Avenir"
-            volumeLabel.fontSize = 23
+            volumeLabel.fontName = ""
+            volumeLabel.fontSize = 26
             volumeLabel.fontColor = .white
             volumeLabel.alpha = 0.0
             volumeLabel.position = CGPoint(x: size.width * 0.09, y: size.height/2)
             volumeLabel.zPosition = 10
             addChild(volumeLabel)
-            print("hey")
+            //print("hey")
             
             volumeValueLabel = SKLabelNode(text: "" )
-            volumeValueLabel.fontName = "Avenir"
-            volumeValueLabel.fontSize = 23
+            volumeValueLabel.fontName = "Raleway Extra Bold"
+            volumeValueLabel.fontSize = 26
             volumeValueLabel.fontColor = .white
             volumeValueLabel.alpha = 0.0
             volumeValueLabel.position = CGPoint(x: size.width * 0.09, y: size.height * 0.47)
@@ -311,16 +320,16 @@ class MainPadsScene: SKScene {
          if reverbLabel == nil{
              
              reverbLabel = SKLabelNode(text: "Reverb: ")
-             reverbLabel.fontName = "Avenir"
-             reverbLabel.fontSize = 24
+             reverbLabel.fontName = "Raleway Extra Bold"
+             reverbLabel.fontSize = 26
              reverbLabel.fontColor = .white
              reverbLabel.alpha = 0.0
              reverbLabel.position = CGPoint(x: size.width * 0.09, y: size.height/2)
              addChild(reverbLabel)
              
              reverbValueLabel = SKLabelNode(text: "")
-             reverbValueLabel.fontName = "Avenir"
-             reverbValueLabel.fontSize = 24
+             reverbValueLabel.fontName = "Raleway Extra Bold"
+             reverbValueLabel.fontSize = 26
              reverbValueLabel.fontColor = .white
              reverbValueLabel.alpha = 0.0
              reverbValueLabel.position = CGPoint(x: size.width * 0.09, y: size.height * 0.47)
@@ -330,16 +339,16 @@ class MainPadsScene: SKScene {
         if complexityLabel == nil{
             
             complexityLabel = SKLabelNode(text: "Complexity: ")
-            complexityLabel.fontName = "Avenir"
-            complexityLabel.fontSize = 24
+            complexityLabel.fontName = "Raleway Extra Bold"
+            complexityLabel.fontSize = 26
             complexityLabel.fontColor = .white
             complexityLabel.alpha = 0.0
             complexityLabel.position = CGPoint(x: size.width * 0.09, y: size.height/2)
             addChild(complexityLabel)
             
             complexityValueLabel = SKLabelNode(text: "")
-            complexityValueLabel.fontName = "Avenir"
-            complexityValueLabel.fontSize = 24
+            complexityValueLabel.fontName = "Raleway Extra Bold"
+            complexityValueLabel.fontSize = 26
             complexityValueLabel.fontColor = .white
             complexityValueLabel.alpha = 0.0
             complexityValueLabel.position = CGPoint(x: size.width * 0.09, y: size.height * 0.47)
@@ -351,16 +360,16 @@ class MainPadsScene: SKScene {
          
          if noteLabel == nil{
              noteLabel = SKLabelNode(text: "Note: ")
-             noteLabel.fontName = "Avenir"
-             noteLabel.fontSize = 24
+             noteLabel.fontName = "Raleway Extra Bold"
+             noteLabel.fontSize = 26
              noteLabel.fontColor = .white
              noteLabel.alpha = 0.0
              noteLabel.position = CGPoint(x: size.width/2, y: size.height * 0.9)
              addChild(noteLabel)
              
              noteValueLabel = SKLabelNode(text: noteNames[0])
-             noteValueLabel.fontName = "Avenir"
-             noteValueLabel.fontSize = 24
+             noteValueLabel.fontName = "Raleway Extra Bold"
+             noteValueLabel.fontSize = 26
              noteValueLabel.fontColor = .white
              noteValueLabel.alpha = 0.0
              noteValueLabel.position = CGPoint(x: size.width/2, y: size.height * 0.86)
@@ -369,16 +378,16 @@ class MainPadsScene: SKScene {
          
          if filterCutoffLabel == nil{
              filterCutoffLabel = SKLabelNode(text: "Filter Cutoff: ")
-             filterCutoffLabel.fontName = "Avenir"
-             filterCutoffLabel.fontSize = 24
+             filterCutoffLabel.fontName = "Raleway Extra Bold"
+             filterCutoffLabel.fontSize = 26
              filterCutoffLabel.fontColor = .white
              filterCutoffLabel.alpha = 0.0
              filterCutoffLabel.position = CGPoint(x: size.width/2, y: size.height * 0.9)
              addChild(filterCutoffLabel)
              
              filterCutoffValueLabel = SKLabelNode(text: "")
-             filterCutoffValueLabel.fontName = "Avenir"
-             filterCutoffValueLabel.fontSize = 24
+             filterCutoffValueLabel.fontName = "Raleway Extra Bold"
+             filterCutoffValueLabel.fontSize = 26
              filterCutoffValueLabel.fontColor = .white
              filterCutoffValueLabel.alpha = 1.0
              filterCutoffValueLabel.position = CGPoint(x: size.width/2, y: size.height * 0.86)

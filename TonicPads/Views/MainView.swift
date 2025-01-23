@@ -99,8 +99,11 @@ struct MainView: View {
                         .padding(.bottom, 40)
                         .onChange(of: isPlaying) { newValue in
                             if newValue {
+                                
+                                
                                 viewModel.playSound()
                             } else {
+                            
                                 viewModel.stopSound()
                             }
                         }

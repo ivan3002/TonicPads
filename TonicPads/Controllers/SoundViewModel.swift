@@ -109,7 +109,7 @@ class SoundViewModel: ObservableObject {
     
     func updateComplexity(complexity: CGFloat){
         
-        soundEngine.complexityAlg(c: complexity)
+        soundEngine.complexityAlg(complexityValue: complexity)
     }
     
     func setStartAttack(attack: Double) {
@@ -121,11 +121,6 @@ class SoundViewModel: ObservableObject {
        soundEngine.release = AUValue(release)
        }
        
-   func setjustIntonation(isOn: Bool) {
-       soundEngine.istwelveTET = isOn
-       soundEngine.setOscIntervals()
-           
-       }
     
     //---------------------------------------**Getters**-----------------------------------------------------------------------------
     func getCurrentNoteIndex() -> Int {
@@ -155,9 +150,7 @@ class SoundViewModel: ObservableObject {
         let complexRound = ceil(complex * 100)
         return String(complexRound)
     }
-    func getTwelveTET()->Bool{
-        return soundEngine.istwelveTET
-    }
+    
     
     
     func getAttack() -> AUValue{

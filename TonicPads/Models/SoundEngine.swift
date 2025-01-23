@@ -39,17 +39,6 @@ class SoundEngine {
         
     ]
     
-    let justIntonatedIntervals: [Float] = [
-        1.0, //root
-        1.5,   // Perfect 5th (3:2 ratio)
-        2.0,   // Octave (2:1 ratio) --> Major 9th includes octave + major second
-        9.0 / 8.0, // Major 2nd (9:8 ratio)
-        5.0 / 3.0, // Major 6th (5:3 ratio)
-        0.5    // Sub-octave (1:2 ratio)
-        
-    ]
-    
-    var istwelveTET =  true
     
     var envelope: AmplitudeEnvelope
     var engineInstance = AudioEngine()
@@ -148,7 +137,7 @@ class SoundEngine {
     
     func setOscIntervals(){
         // chooses the interval set based on the current tuning system
-        let intervals = istwelveTET ? twelveTETIntervals : justIntonatedIntervals
+        let intervals = twelveTETIntervals
         // Update each oscillator's frequency based on the intervals
         for (index, interval) in intervals.enumerated() {
             if index > 0 && index < oscillators.count {
@@ -240,13 +229,7 @@ class SoundEngine {
         setDryWetMix(dry: dry, wet: wet)
     }
     
-    
-    //---------------COMPLEXITY IMPLEMENTATION----------------------------------------//
-    
-    func complexityAlg(c: CGFloat) {
-        
-        complexity = min(max(complexity + (c),0.0), 1.0)
-        // Calculate coefficients for chorus and flange
+    private func updateModulationEffects(c: CGFloat) {
         let chorusCoef = min(max(chorusAmount + AUValue(c), 0.0), 0.5)
         let flangeCoef = min(max(flangeAmount + AUValue(c), 0.0), 0.8)
         
@@ -255,54 +238,73 @@ class SoundEngine {
         flangeAmount = flangeCoef
         chorus.dryWetMix = AUValue(chorusCoef)
         flanger.dryWetMix = AUValue(flangeCoef)
-        
-        //print("Chorus Coefficient: \(chorusCoef), Flange Coefficient: \(flangeCoef)")
-        
-        // Base volume step for each harmonic (scaled by complexity)
-        let harmonicStep = c  // Adjust scaling as needed
-        print(harmonicStep)
-        
-        if harmonicStep>0 {
-            for (index, oscillator) in oscillators.enumerated() {
-                if index == 0 {
-                    // Root oscillator remains at fixed volume
-                    oscillator.amplitude = volume
-                } else {
-                    // Check if the previous oscillator has reached its max amplitude
-                    if oscillators[index - 1].amplitude == volume {
-                        // Incrementally increase this oscillator's amplitude
-                        let newHarmVolume = min(max(oscillator.amplitude + AUValue(harmonicStep), 0.0), volume)
-                        oscillator.amplitude = newHarmVolume
-                        
-                        //print("Oscillator[\(index)] Amplitude: \(oscillator.amplitude)")
-                        
-                        // Stop introducing new harmonics if this one isn't maxed out
-                        if oscillator.amplitude < volume {
-                            break
-                        }
-                    }
-                }
-            }
-        }else {
-            // Removing notes (decreasing complexity)
-            for (index, oscillator) in oscillators.enumerated().reversed() {
-                if index == 0 {
-                    // Root oscillator remains at fixed volume
-                    oscillator.amplitude = volume
-                } else {
-                                        // Decrease the amplitude of the previous oscillator
-                    let newHarmVolumeDec = max(oscillator.amplitude + AUValue(harmonicStep), 0.0) //adding because negative value
-                    oscillator.amplitude = newHarmVolumeDec
+    }
+    
+    //---------------COMPLEXITY IMPLEMENTATION----------------------------------------//
+    
+    //helper function for increasing the level of each note in a chord as complexity increases
+    func increaseNoteLevels(by: CGFloat){
+        for (index, oscillator) in oscillators.enumerated() {
+            if index == 0 {
+                // Root oscillator remains at fixed volume
+                oscillator.amplitude = volume
+            } else {
+                // Check if the previous oscillator has reached its max amplitude
+                if oscillators[index - 1].amplitude == volume {
+                    // Incrementally increase this oscillator's amplitude
+                    let newHarmVolume = min(max(oscillator.amplitude + AUValue(by), 0.0), volume)
+                    oscillator.amplitude = newHarmVolume
                     
-                    //print("Oscillator[\(index)] Amplitude (Decreasing): \(oscillator.amplitude)")
+                    //print("Oscillator[\(index)] Amplitude: \(oscillator.amplitude)")
                     
-                    // Stop removing notes if this one isn't fully off
-                    if oscillator.amplitude > 0.0 {
+                    // Stop introducing new harmonics if this one isn't maxed out
+                    if oscillator.amplitude < volume {
                         break
-                        }
                     }
                 }
             }
         }
     }
+    
+    //helper function for decreasing the level of each note in a chord as complexity decreases
+    func decreaseNoteLevels(by: CGFloat){
+        for (index, oscillator) in oscillators.enumerated().reversed() {
+            if index == 0 {
+                // Root oscillator remains at fixed volume
+                oscillator.amplitude = volume
+            } else {
+                                    // Decrease the amplitude of the previous oscillator
+                let newHarmVolumeDec = max(oscillator.amplitude + AUValue(by), 0.0) //adding because negative value
+                oscillator.amplitude = newHarmVolumeDec
+                
+                //print("Oscillator[\(index)] Amplitude (Decreasing): \(oscillator.amplitude)")
+                
+                // Stop removing notes if this one isn't fully off
+                if oscillator.amplitude > 0.0 {
+                    break
+                    }
+                }
+            }
+        }
+    
+    
+    func complexityAlg(complexityValue: CGFloat) {
+        complexity = min(max(complexity + (complexityValue),0.0), 1.0)
+        updateModulationEffects(c: complexityValue)
+    
+        // Base volume step for each harmonic (scaled by complexity)
+        let harmonicStep = complexityValue  // Adjust scaling as needed
+        print(harmonicStep)
+        
+        if harmonicStep>0 {
+            increaseNoteLevels(by: harmonicStep)
+        }else {
+            decreaseNoteLevels(by: harmonicStep)
+            // Removing notes (decreasing complexity)
+            
+        }
+  
+    }
+}
+
 

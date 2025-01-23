@@ -14,47 +14,54 @@ struct HomeView: View {
     
 
     var body: some View {
-        ZStack {
-            if showMainView == true{
-                MainView(showMainView: $showMainView)
-                
-            } else {
-                Color(red: 0.2, green: 0.4, blue: 0.5)
-                    .edgesIgnoringSafeArea(.all)
-                    .hueRotation(.degrees(hueRotationAngle))
-                    .onAppear {
-                        withAnimation(Animation.linear(duration: 5).repeatForever(autoreverses: true).speed(1)) {
-                            hueRotationAngle = 100
+        GeometryReader{geometry in
+            ZStack {
+                if showMainView == true{
+                    MainView(showMainView: $showMainView)
+                    
+                } else {
+                    Color(red: 0.2, green: 0.4, blue: 0.5)
+                        .edgesIgnoringSafeArea(.all)
+                        .hueRotation(.degrees(hueRotationAngle))
+                        .onAppear {
+                            withAnimation(Animation.linear(duration: 5).repeatForever(autoreverses: true).speed(1)) {
+                                hueRotationAngle = 100
+                            }
                         }
-                    }
-                VStack {
-                    Button(action: {
-                        showMainView = true
-                    }) {
-                        Text("Go Inside!")
-                            .font(.title)
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.blue)
-                            .cornerRadius(10)
-                    }
-                    Button(action: {
-                        showHelp = true
+                    VStack {
+                        Image("TonicPads")
+                            .resizable()
+                            .frame(width: geometry.size.width * 0.5 ,height: geometry.size.width * 0.5)
                         
-                    }){
-                        Text("How to use TonicPads")
-                            .font(.subheadline)
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.teal)
-                            .cornerRadius(10)
-                    }
-                    .sheet(isPresented: $showHelp) {
-                        // Embed HelpPage storyboard
-                        HelpPage()
+                        Button(action: {
+                            showMainView = true
+                        }) {
+                            Text("Go Inside!")
+                                .font(.title)
+                                .foregroundColor(.white)
+                                .padding()
+                                .background(Color.blue)
+                                .cornerRadius(10)
+                        }
+                        Button(action: {
+                            showHelp = true
+                            
+                        }){
+                            Text("How to use TonicPads")
+                                .font(.subheadline)
+                                .foregroundColor(.white)
+                                .padding()
+                                .background(Color.teal)
+                                .cornerRadius(10)
+                        }
+                        .sheet(isPresented: $showHelp) {
+                            // Embed HelpPage storyboard
+                            HelpPage()
+                        }
                     }
                 }
             }
+            
         }
     }
 }

@@ -49,7 +49,7 @@ class SoundEngine {
         
     ]
     
-    private var istwelveTET = Bool(true)
+    var istwelveTET =  true
     
     var envelope: AmplitudeEnvelope
     var engineInstance = AudioEngine()
@@ -65,6 +65,8 @@ class SoundEngine {
     var chorusAmount: AUValue = 0
     var flanger: Flanger
     var flangeAmount: AUValue = 0
+    var attack: AUValue = 0.5
+    var release: AUValue = 0.5
     
     var lowPass: LowPassButterworthFilter
     var cutoff: AUValue = 0
@@ -92,6 +94,7 @@ class SoundEngine {
             osc.index = AUValue(3)
             
             osc.frequency = frequency
+            
             
             
             osc.detuningOffset = AUValue(0)
@@ -128,13 +131,14 @@ class SoundEngine {
         finalMix = Mixer(drySignal, wetSignal) // Combine both signals
         
         envelope = AmplitudeEnvelope(finalMix)
-        envelope.attackDuration = 1
+        envelope.attackDuration = AUValue(attack)
         envelope.sustainLevel = 1
         envelope.decayDuration = 0.1
-        envelope.releaseDuration = 1
+        envelope.releaseDuration = AUValue(release)
         
         engineInstance.output = envelope
         
+    
         
         setOscIntervals()
         
@@ -155,9 +159,11 @@ class SoundEngine {
         
     }
     
-    
+
     func startSound() {
-        
+        print("start: ", attack)
+        envelope.attackDuration = attack
+        envelope.releaseDuration = release
         oscillators.forEach{$0.start()}
         do {
             try engineInstance.start()
@@ -165,13 +171,18 @@ class SoundEngine {
         } catch {
             print("Error starting audio engine: \(error.localizedDescription)")
         }
+        envelope.openGate()
         
     }
     
     func stopSound() {
-        oscillators.forEach { $0.stop() }
-        engineInstance.stop()
+        envelope.closeGate() // Trigger the release phase
+        sleep(4)
+        self.oscillators.forEach { $0.stop() }
+        self.engineInstance.stop()
         print("Audio engine stopped.")
+       
+        
     }
     
     func setVolume(v: CGFloat) {
@@ -229,9 +240,12 @@ class SoundEngine {
         setDryWetMix(dry: dry, wet: wet)
     }
     
+    
+    //---------------COMPLEXITY IMPLEMENTATION----------------------------------------//
+    
     func complexityAlg(c: CGFloat) {
         
-        complexity = c
+        complexity = min(max(complexity + (c),0.0), 1.0)
         // Calculate coefficients for chorus and flange
         let chorusCoef = min(max(chorusAmount + AUValue(c), 0.0), 0.5)
         let flangeCoef = min(max(flangeAmount + AUValue(c), 0.0), 0.8)

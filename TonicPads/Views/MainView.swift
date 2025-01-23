@@ -21,7 +21,7 @@ struct MainView: View {
         ZStack {
             if showSettings {
                 // Navigate to SettingsPage
-                SettingsPage(showSettings: $showSettings)
+                SettingsPage(showSettings: $showSettings, viewModel: viewModel)
             }else{
                 
                 GeometryReader{ geometry in
@@ -138,7 +138,8 @@ struct MainView: View {
             skView.allowsTransparency = true // Optional: Allows transparent backgrounds
             skView.isMultipleTouchEnabled = true
             
-            let scene = MainPadsScene(size: size) // Create the SpriteKit scene
+            let scene = MainPadsScene.shared // Create the SpriteKit scene
+            scene.size = size
             scene.viewModel = viewModel
             scene.scaleMode = .resizeFill // Scale the scene to fill the SKView
             skView.presentScene(scene) // Attach the scene to the SKView

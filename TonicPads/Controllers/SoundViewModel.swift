@@ -10,6 +10,8 @@ import Foundation
 import AudioKit
 
 class SoundViewModel: ObservableObject {
+
+    
     var mainPadsScene: MainPadsScene?
     var currentNoteIndex: Int = 0
     private var soundEngine = SoundEngine()
@@ -110,8 +112,20 @@ class SoundViewModel: ObservableObject {
         soundEngine.complexityAlg(c: complexity)
     }
     
-    
-    
+    func setStartAttack(attack: Double) {
+       soundEngine.attack = AUValue(attack)
+        print(attack)
+       }
+       
+   func setStopRelease(release: Double) {
+       soundEngine.release = AUValue(release)
+       }
+       
+   func setjustIntonation(isOn: Bool) {
+       soundEngine.istwelveTET = isOn
+       soundEngine.setOscIntervals()
+           
+       }
     
     //---------------------------------------**Getters**-----------------------------------------------------------------------------
     func getCurrentNoteIndex() -> Int {
@@ -137,8 +151,23 @@ class SoundViewModel: ObservableObject {
     }
     func getComplexityAsString() -> String{
         let complex = soundEngine.complexity
-        let complexRound = round(1000 * complex)/1000
+        
+        let complexRound = ceil(complex * 100)
         return String(complexRound)
+    }
+    func getTwelveTET()->Bool{
+        return soundEngine.istwelveTET
+    }
+    
+    
+    func getAttack() -> AUValue{
+        
+        return soundEngine.attack
+    }
+    
+    func getRelease()-> AUValue{
+        
+        return soundEngine.release
     }
         
 }

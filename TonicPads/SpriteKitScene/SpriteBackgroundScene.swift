@@ -16,6 +16,7 @@ enum Direction {
 
 class MainPadsScene: SKScene {
     
+    static let shared = MainPadsScene(size: UIScreen.main.bounds.size)
     //--------------------------------**INIT**------------------------------------------------------------------------------
     var viewModel: SoundViewModel!
     private var activeTouches: [UITouch: CGPoint] = [:] // Dictionary to track active touches and their locations
@@ -54,19 +55,13 @@ class MainPadsScene: SKScene {
         // Set the background color to a soft gradient color
         
         backgroundColor = SKColor(red: 0.2, green: 0.4, blue: 0.3, alpha: 1.0)
-        
-        // Add glowing light nodes
-        //note that origin is bottom left
-        addGlowingLight(at: CGPoint(x: size.width * 0.3, y: size.height * 0.6), glowRadius: 100)
-        addGlowingLight(at: CGPoint(x: size.width * 0.7, y: size.height * 0.4), glowRadius: 150)
-        
-        
         print("Scene initialized with size: \(size)")
-        initLabels()
+        
     }
     
     //did this because size is initialising to 0,0 if done in didMove() for some reason
     override func didChangeSize(_ oldSize: CGSize) {
+        initLabels()
         
         print("Scene size changed to \(size)")
         
@@ -78,7 +73,7 @@ class MainPadsScene: SKScene {
             addChild(particleEmitter)
         }
         
-        initLabels()
+        
         
     }
     
@@ -287,26 +282,6 @@ class MainPadsScene: SKScene {
     }
     
     
-    
-    func addGlowingLight(at position: CGPoint, glowRadius: CGFloat) {
-        // Create a circular glow
-        let glow = SKShapeNode(circleOfRadius: glowRadius)
-        glow.position = position
-        glow.fillColor = SKColor(red: 0.3, green: 0.7, blue: 1.0, alpha: 0.2)
-        glow.strokeColor = .clear
-        glow.glowWidth = 20
-        addChild(glow)
-        
-        // Animate opacity to create a subtle glowing effect
-        let fadeInOut = SKAction.sequence([
-            SKAction.fadeAlpha(to: 0.4, duration: 2),
-            SKAction.fadeAlpha(to: 0.2, duration: 2)
-        ])
-        glow.run(SKAction.repeatForever(fadeInOut))
-    }
-    
-    
-    
     //---------------------------***Labels, Text & Buttons ***-----------------------------------------------------------
     
     private func initLabels(){
@@ -320,7 +295,9 @@ class MainPadsScene: SKScene {
             volumeLabel.fontColor = .white
             volumeLabel.alpha = 0.0
             volumeLabel.position = CGPoint(x: size.width * 0.09, y: size.height/2)
+            volumeLabel.zPosition = 10
             addChild(volumeLabel)
+            print("hey")
             
             volumeValueLabel = SKLabelNode(text: "" )
             volumeValueLabel.fontName = "Avenir"
@@ -403,7 +380,7 @@ class MainPadsScene: SKScene {
              filterCutoffValueLabel.fontName = "Avenir"
              filterCutoffValueLabel.fontSize = 24
              filterCutoffValueLabel.fontColor = .white
-             filterCutoffValueLabel.alpha = 0.0
+             filterCutoffValueLabel.alpha = 1.0
              filterCutoffValueLabel.position = CGPoint(x: size.width/2, y: size.height * 0.86)
              addChild(filterCutoffValueLabel)
              

@@ -55,7 +55,6 @@ class MainPadsScene: SKScene {
         // Set the background color to a soft gradient color
         
         backgroundColor = SKColor(red: 0.2, green: 0.4, blue: 0.3, alpha: 1.0)
-        print("Scene initialized with size: \(size)")
         
     }
     
@@ -63,26 +62,22 @@ class MainPadsScene: SKScene {
     override func didChangeSize(_ oldSize: CGSize) {
         initLabels()
         
-        print("Scene size changed to \(size)")
-        
         // Add the particle emitter
-        if let particleEmitter = SKEmitterNode(fileNamed: "MainBackground.sks") {
-            particleEmitter.position = CGPoint(x: size.width/2, y: size.height/2)
-            particleEmitter.particlePositionRange = CGVector(dx: size.width, dy: size.height)
-            particleEmitter.zPosition = -1 //making lowest layer of scene
-            addChild(particleEmitter)
+        addParticleEmitter()
            
-        }
-    
     }
     
     func addChildren(){
         initLabels()
+        addParticleEmitter()
+    }
+
+    func addParticleEmitter() {
         if let particleEmitter = SKEmitterNode(fileNamed: "MainBackground.sks") {
-            particleEmitter.position = CGPoint(x: size.width/2, y: size.height/2)
-            particleEmitter.particlePositionRange = CGVector(dx: size.width, dy: size.height)
-            particleEmitter.zPosition = -1 //making lowest layer of scene
-            addChild(particleEmitter)
+        particleEmitter.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        particleEmitter.particlePositionRange = CGVector(dx: size.width, dy: size.height)
+        particleEmitter.zPosition = -1
+        addChild(particleEmitter)
         }
     }
     
@@ -102,65 +97,7 @@ class MainPadsScene: SKScene {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch in touches {
-            let location = touch.location(in: self)
-            let previousLocation = touch.previousLocation(in: self)
-            
-            // Calculate deltas
-            let deltaX = location.x - previousLocation.x
-            let deltaY = location.y - previousLocation.y
-            
-            // Normalize deltaX and deltaY based on screen size
-            let maxWidth = self.size.width
-            let maxHeight = self.size.height
-            normalizedDeltaX = deltaX / maxWidth
-            normalizedDeltaY = deltaY / maxHeight
-            
-            // Accumulate the delta values
-            accumulatedDeltaX += normalizedDeltaX
-            totalDeltaX += normalizedDeltaX // Tracks total motion
-            
-            //print("Normalized x: ", normalizedDeltaX, " y: ", normalizedDeltaY)
-            
-            // Determine the dominant direction of movement
-            if abs(normalizedDeltaX) > abs(normalizedDeltaY) {
-                if normalizedDeltaX > 0 {
-                    //print("Moving right")
-                    currentDirection = .x
-                } else {
-                    //print("Moving left")
-                    currentDirection = .x
-                }
-            } else {
-                if normalizedDeltaY > 0 {
-                    //print("Moving up")
-                    currentDirection = .y
-                } else {
-                    //print("Moving down")
-                    currentDirection = .y
-                }
-            }
-            
-            // Handle gestures based on the number of active touches
-            if activeTouches.count == 1 && currentDirection == .y {
-                showLabels()
-                viewModel.updateVolume(volumeDistance: normalizedDeltaY)
-            }else if activeTouches.count == 1 && currentDirection == .x{
-                showLabels()
-            }else if activeTouches.count == 2 && currentDirection == .x{
-                viewModel.updateFilterCutoff(cutoffDistance: normalizedDeltaX)
-                showLabels()
-            }else if activeTouches.count == 2 && currentDirection == .y{
-                viewModel.updateComplexity(complexity: normalizedDeltaY)
-                showLabels()
-            }else if activeTouches.count == 3 && currentDirection == .y{
-                viewModel.updateReverbAmount(revAmount: normalizedDeltaY)
-                showLabels()
-            }
-            
-            // Optional: Visualize or act on the touch
-            visualiseTouch(at: location)
-        }
+        handleGestures(touches: touches)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -171,7 +108,7 @@ class MainPadsScene: SKScene {
                 viewModel.updateFrequency(swipeDistance: totalDeltaX)
             }
             
-           if viewModel.getCurrentNoteIndex() != currentIndex{
+            if viewModel.getCurrentNoteIndex() != currentIndex{
                 currentIndex = viewModel.getCurrentNoteIndex()
                 noteValueLabel.text = noteNames[currentIndex]
             }
@@ -179,14 +116,13 @@ class MainPadsScene: SKScene {
             accumulatedDeltaX = 0 // Reset for next gesture
             totalDeltaX = 0
         }
+        
+        //removes touch points from dictionary
         for touch in touches {
             activeTouches.removeValue(forKey: touch)
             
         }
-        
-        
-        
-        printActiveFingers()
+
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -195,13 +131,57 @@ class MainPadsScene: SKScene {
             activeTouches.removeValue(forKey: touch)
         }
         fadeOutLabels()
-        printActiveFingers()
         
     }
     
+    private func determineGestureDirection(deltaX: CGFloat, deltaY: CGFloat) -> Direction {
+        return abs(deltaX) > abs(deltaY) ? .x : .y
+    }
     
-    private func printActiveFingers() {
-        print("Active fingers: \(activeTouches.count)")
+    func handleGestures(touches: Set<UITouch>){
+        guard let touch = touches.first else { return }
+        for touch in touches {
+            let location = touch.location(in: self)
+            let previousLocation = touch.previousLocation(in: self)
+            
+            // Calculate deltas
+            let deltaX = location.x - previousLocation.x
+            let deltaY = location.y - previousLocation.y
+            
+            // normalise deltas
+            normalizedDeltaX = deltaX / size.width
+            normalizedDeltaY = deltaY / size.height
+            
+           
+            accumulatedDeltaX += normalizedDeltaX
+            totalDeltaX += normalizedDeltaX
+            
+            // Determine direction
+            currentDirection = determineGestureDirection(deltaX: normalizedDeltaX, deltaY: normalizedDeltaY)
+            
+            // actions based on touches and direction
+            switch (activeTouches.count, currentDirection) {
+            case (1, .y):
+                showLabels()
+                viewModel.updateVolume(volumeDistance: normalizedDeltaY)
+            case (1, .x):
+                showLabels()
+            case (2, .x):
+                viewModel.updateFilterCutoff(cutoffDistance: normalizedDeltaX)
+                showLabels()
+            case (2, .y):
+                viewModel.updateComplexity(complexity: normalizedDeltaY)
+                showLabels()
+            case (3, .y):
+                viewModel.updateReverbAmount(revAmount: normalizedDeltaY)
+                showLabels()
+            default:
+                break
+            }
+            
+            // Visualize the touch
+            visualiseTouch(at: location)
+        }
     }
     
     
@@ -430,3 +410,4 @@ class MainPadsScene: SKScene {
         
     }
 }
+

@@ -130,7 +130,6 @@
 		73C23AA92CF8BC76001486CB /* TonicPads */ = {
 			isa = PBXGroup;
 			children = (
-				737550492D30ADF9004596B8 /* SpriteKitScene */,
 				73DBEA802D0C850C004C0D23 /* Models */,
 				73DBEA822D0C8546004C0D23 /* Views */,
 				73DBEA832D0C8579004C0D23 /* Controllers */,
@@ -177,11 +176,11 @@
 		73DBEA822D0C8546004C0D23 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				737550492D30ADF9004596B8 /* SpriteKitScene */,
 				73DBEA762D0C7A18004C0D23 /* LaunchScreen.storyboard */,
 				73DBEA7A2D0C7D82004C0D23 /* HomeView.swift */,
 				73DBEA782D0C7D5A004C0D23 /* MainView.swift */,
-				73C391A42D39F07E00C37793 /* HelpPage.swift */,
-				73C391A62D3A01B700C37793 /* HelpText.swift */,
+				73FD94462D42DDB80049ABC6 /* Help-page */,
 				736A247E2D3B70AB00B78A12 /* SettingsPage.swift */,
 			);
 			path = Views;
@@ -193,6 +192,15 @@
 				7374AB0B2D2D7CF600C179F5 /* SoundViewModel.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		73FD94462D42DDB80049ABC6 /* Help-page */ = {
+			isa = PBXGroup;
+			children = (
+				73C391A42D39F07E00C37793 /* HelpPage.swift */,
+				73C391A62D3A01B700C37793 /* HelpText.swift */,
+			);
+			path = "Help-page";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

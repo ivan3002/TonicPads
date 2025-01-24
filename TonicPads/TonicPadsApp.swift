@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//Entry point for the application
 
 @main
 struct TonicPadsApp: App {

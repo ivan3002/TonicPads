@@ -248,7 +248,7 @@ class SoundEngine {
                     let newHarmVolume = min(max(oscillator.amplitude + AUValue(by), 0.0), volume)
                     oscillator.amplitude = newHarmVolume
                     
-                    //print("Oscillator[\(index)] Amplitude: \(oscillator.amplitude)")
+        
                     
                     // Stop introducing new harmonics if this one isn't maxed out
                     if oscillator.amplitude < volume {
@@ -270,7 +270,6 @@ class SoundEngine {
                 let newHarmVolumeDec = max(oscillator.amplitude + AUValue(by), 0.0) //adding because negative value
                 oscillator.amplitude = newHarmVolumeDec
                 
-                //print("Oscillator[\(index)] Amplitude (Decreasing): \(oscillator.amplitude)")
                 
                 // Stop removing notes if this one isn't fully off
                 if oscillator.amplitude > 0.0 {

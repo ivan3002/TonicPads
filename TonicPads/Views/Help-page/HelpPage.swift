@@ -20,61 +20,61 @@ struct HelpPage: View {
                 .multilineTextAlignment(.center)
                 .padding(.top, 16)
             
-            Spacer() // Push content to center dynamically
+            Spacer() // Push content to center
             
             // Vertical stack for image-label pairs
             ScrollView{
                 HStack{
-                    VStack(spacing: 10) { // Adjust spacing as needed
+                    VStack(spacing: 10) {
                         Text(helpText.intro)
                             .font(.body)
                             .multilineTextAlignment(.leading)
                         
                         HStack {
-                            Image("1") // Replace with your image
+                            Image("1")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 200, height: 200) // Adjust as needed
+                                .frame(width: 200, height: 200)
                             
                             Text(helpText.oneVerticalFingerInfo)
                                 .font(.body)
                                 .multilineTextAlignment(.leading)
                         }
                         HStack {
-                            Image("2") // Replace with your image
+                            Image("2")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 200, height: 200) // Adjust as needed
+                                .frame(width: 200, height: 200)
                             
                             Text(helpText.oneHorizontalFingerInfo)
                                 .font(.body)
                                 .multilineTextAlignment(.leading)
                         }
                         HStack {
-                            Image("3") // Replace with your image
+                            Image("3")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 200, height: 200) // Adjust as needed
+                                .frame(width: 200, height: 200)
                             
                             Text(helpText.twoVerticalFingerInfo)
                                 .font(.body)
                                 .multilineTextAlignment(.leading)
                         }
                         HStack {
-                            Image("4") // Replace with your image
+                            Image("4")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 200, height: 200) // Adjust as needed
+                                .frame(width: 200, height: 200)
                             
                             Text(helpText.twoHorizontalFingerInfo)
                                 .font(.body)
                                 .multilineTextAlignment(.leading)
                         }
                         HStack {
-                            Image("5") // Replace with your image
+                            Image("5")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 200, height: 200) // Adjust as needed
+                                .frame(width: 200, height: 200)
                             
                             Text(helpText.threeFingerInfo)
                                 .font(.body)
@@ -84,7 +84,7 @@ struct HelpPage: View {
                         
                     }
                     
-                    Spacer() // Push content dynamically to the center
+                    Spacer() // Push content to the center
                 }
                 .padding(.horizontal, 16) // Add padding on the sides
             }

@@ -66,7 +66,7 @@ class SoundViewModel: ObservableObject {
     func updateFilterCutoff(cutoffDistance: CGFloat) {
         //input cutoffDistance will be between -1 and 1
         // Define the cutoff range
-        let minCutoff: CGFloat = 50      // 50 Hz
+        let minCutoff: CGFloat = 100      // 50 Hz
         let maxCutoff: CGFloat = 20000  // 20 kHz
        
         
@@ -116,9 +116,15 @@ class SoundViewModel: ObservableObject {
        
     
     //---------------------------------------**getters**-----------------------------------------------------------------------------
+    
+    
+    
     func getCurrentNoteIndex() -> Int {
         return currentNoteIndex
     }
+    
+    
+    //Below are a set of functions which will return strings for the labels on the display
     
     func getCurrentVolumeAsString() -> String {
         let v = soundEngine.volume

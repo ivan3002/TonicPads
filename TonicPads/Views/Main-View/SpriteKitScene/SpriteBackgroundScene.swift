@@ -9,6 +9,8 @@ import Foundation
 import SpriteKit
 import SwiftUI
 
+
+//for dominant direction of swipes
 enum Direction {
     case x
     case y
@@ -25,6 +27,8 @@ class MainPadsScene: SKScene {
     
     private var noteLabel: SKLabelNode!
     private var noteValueLabel: SKLabelNode!
+    
+    //Array of note names to be displays
     private var noteNames: [String] = [
         "C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb", "B", "C"
     ]
@@ -40,7 +44,7 @@ class MainPadsScene: SKScene {
     private var complexityLabel: SKLabelNode!
     private var complexityValueLabel: SKLabelNode!
     
-    //proportial movement values relative to the screen size
+    //proportional movement values relative to the screen size
     private var normalisedDeltaX: CGFloat!
     private var normalisedDeltaY: CGFloat!
     
@@ -78,7 +82,7 @@ class MainPadsScene: SKScene {
         if let particleEmitter = SKEmitterNode(fileNamed: "MainBackground.sks") {
         particleEmitter.position = CGPoint(x: size.width / 2, y: size.height / 2)
         particleEmitter.particlePositionRange = CGVector(dx: size.width, dy: size.height)
-        particleEmitter.zPosition = -1
+        particleEmitter.zPosition = -1 //bottom position on screen
         addChild(particleEmitter)
         }
     }

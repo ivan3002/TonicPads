@@ -13,8 +13,7 @@ struct MainView: View {
     @State private var showHelp = false
     @State private var isPlaying = false
     @State private var showSettings: Bool = false
-    @Binding var showMainView: Bool // Accept a binding
-    
+    @Binding var showMainView: Bool     
     
     
     var body: some View {
@@ -71,7 +70,7 @@ struct MainView: View {
                                 
                             }
                             .sheet(isPresented: $showHelp) {
-                                // Embed HelpPage storyboard
+                                // display help page as a sheet
                                 HelpPage()
                             }
                         }
@@ -93,7 +92,7 @@ struct MainView: View {
                             Text("Sound is OFF. Tap to toggle sound.")
                             .font(.custom("AvenirNext-Bold", size: 20))
                             .foregroundColor(.red)
-                            .padding(.bottom, 8) // Add some spacing above the toggle
+                            .padding(.bottom, 8)
                         }
                     Toggle("", isOn: $isPlaying)
                         .labelsHidden()

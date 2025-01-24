@@ -9,6 +9,9 @@
 import Foundation
 import AudioKit
 
+
+//Controller for TonicPads app. Any views that need aceess to soundEngine will use this object.
+
 class SoundViewModel: ObservableObject {
 
     
@@ -32,14 +35,12 @@ class SoundViewModel: ObservableObject {
         soundEngine.setVolume(v: volumeDistance)
     }
     
+    //converting distance to a frequency here before passing it.
     func updateFrequency(swipeDistance: CGFloat) {
         print(swipeDistance)
         
-        
         let dxRange: CGFloat = 0.05 // Define sensitivity for a full note step
         let steps = Int(swipeDistance / dxRange) // Calculate steps from swipe distance
-        
-        
         
         // Calculate the potential new index
         var newNoteIndex = currentNoteIndex + steps
@@ -57,22 +58,17 @@ class SoundViewModel: ObservableObject {
             let frequency = soundEngine.chromaticScale[currentNoteIndex]
             
             // Update the sound engine or oscillator with the new frequency
-            //print("Swipe distance: \(swipeDistance), New Frequency: \(frequency) Hz (Note index: \(currentNoteIndex))")
             soundEngine.setFrequency(f: AUValue(frequency))
-        } else {
-            //print("Swipe distance: \(swipeDistance), Frequency unchanged (Note index: \(currentNoteIndex))")
         }
     }
     
+    //implementing conversion to a cutoff frequency here
     func updateFilterCutoff(cutoffDistance: CGFloat) {
         //input cutoffDistance will be between -1 and 1
         // Define the cutoff range
         let minCutoff: CGFloat = 50      // 50 Hz
         let maxCutoff: CGFloat = 20000  // 20 kHz
-        
-        //let minLog = log10(minCutoff)
-        //let maxLog = log10(maxCutoff)
-        //let normalizedDistance = (cutoffDistance + 1) / 2  // Maps -1 -> 0, 0 -> 0.5, 1 -> 1
+       
         
         // Scale the cutoffDistance to a meaningful range for frequency adjustment
         let cutoffChange = cutoffDistance * 8000 // Adjust scaling factor to control sensitivity
@@ -88,23 +84,16 @@ class SoundViewModel: ObservableObject {
         
         // Set the new cutoff frequency in the sound engine
         soundEngine.setCutoff(lopass: CGFloat(newFrequency))
-        
-        //print("CutoffDistance: \(cutoffDistance), New Frequency: \(newFrequency) Hz")
     }
     
+    //Here the reverb amount really means dry wet mix. the logic for how that is adjusted is done here
     func updateReverbAmount(revAmount: CGFloat){
-        //let minAmount: CGFloat = 0.9
-        //let maxAmount: CGFloat = 0.9
         let dry: CGFloat = 0.0
         let wet: CGFloat = 1.0
-        
-        //var newRevAmount = soundEngine.reverb.feedback + AUValue(revAmount)
-        // newRevAmount = min(max(newRevAmount, AUValue(minAmount)), AUValue(maxAmount))
         
         var newDryWet = soundEngine.dryWetMix + AUValue(revAmount)
         newDryWet = min(max(newDryWet, AUValue(dry)), AUValue(wet))
         
-        //soundEngine.reverb.feedback = newRevAmount
         soundEngine.dryWetMix = newDryWet
         
         soundEngine.setReverb(dryWet: newDryWet )
@@ -126,7 +115,7 @@ class SoundViewModel: ObservableObject {
        }
        
     
-    //---------------------------------------**Getters**-----------------------------------------------------------------------------
+    //---------------------------------------**getters**-----------------------------------------------------------------------------
     func getCurrentNoteIndex() -> Int {
         return currentNoteIndex
     }

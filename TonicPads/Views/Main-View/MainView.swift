@@ -34,11 +34,11 @@ struct MainView: View {
                 VStack{
                     
                     HStack{
-                        //--------------------------------
+                        //back button
                         Button(action: {
                             showMainView = false
                             viewModel.engineOff()
-                            print("hi3")
+                            
                         }){
                             Image("icons8-back-48" )
                                 .resizable()
@@ -50,9 +50,9 @@ struct MainView: View {
                         Spacer()
                         VStack{
                             
+                            //settings button
                             Button(action: {
                                 showSettings = true
-                                print("hi")
                                 
                             }){
                                 Image("settings-icon-14963" )
@@ -61,9 +61,8 @@ struct MainView: View {
                             }
                             
                             
-                            //--------------------------------
+                            //help button
                             Button(action: {
-                                print("hi2")
                                 showHelp = true
                             }){
                                 Image("icons8-help-64" )
@@ -79,12 +78,13 @@ struct MainView: View {
                         .padding(.trailing, 30)
                     }
                     
-                    .padding(.top, 16) // Add padding from the top edge
+                    .padding(.top, 16) // padding from the top edge
                     Spacer()
                 }
                 
                 Spacer()
-                // Toggle for Play/Pause
+                
+                // Toggle implementation for Play/Pause
                 VStack {
                     
                     Spacer()
@@ -100,7 +100,6 @@ struct MainView: View {
                         .padding(.bottom, 40)
                         .onChange(of: isPlaying) { newValue in
                             if newValue {
-                                
                                 
                                 viewModel.playSound()
                             } else {
@@ -139,7 +138,7 @@ struct MainView: View {
         func makeUIView(context: Context) -> SKView {
             
             let skView = SKView() // Create an SKView instance
-            skView.allowsTransparency = true // Optional: Allows transparent backgrounds
+            skView.allowsTransparency = true
             skView.isMultipleTouchEnabled = true
             
             let scene = MainPadsScene.shared // Create the SpriteKit scene
@@ -152,7 +151,7 @@ struct MainView: View {
         }
         
         func updateUIView(_ uiView: SKView, context: Context) {
-            // Updates the view if SwiftUI triggers a state change (not needed here)
+            
         }
     }
 }

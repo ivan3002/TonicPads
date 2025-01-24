@@ -40,8 +40,9 @@ class MainPadsScene: SKScene {
     private var complexityLabel: SKLabelNode!
     private var complexityValueLabel: SKLabelNode!
     
-    private var normalizedDeltaX: CGFloat!
-    private var normalizedDeltaY: CGFloat!
+    //proportial movement values relative to the screen size
+    private var normalisedDeltaX: CGFloat!
+    private var normalisedDeltaY: CGFloat!
     
     private var accumulatedDeltaX: CGFloat = 0.0 // Tracks motion between updates
     private var totalDeltaX: CGFloat = 0.0       // Tracks total motion for the gesture
@@ -52,13 +53,14 @@ class MainPadsScene: SKScene {
     
     
     override func didMove(to view: SKView) {
-        // Set the background color to a soft gradient color
+        
+        // Setting the background color here
         
         backgroundColor = SKColor(red: 0.2, green: 0.4, blue: 0.3, alpha: 1.0)
         
     }
     
-    //did this because size is initialising to 0,0 if done in didMove() for some reason
+    //did this because size is initialising to 0,0 if done in didMove() for some reason therefore labels not appearing
     override func didChangeSize(_ oldSize: CGSize) {
         initLabels()
         
@@ -134,6 +136,8 @@ class MainPadsScene: SKScene {
         
     }
     
+    //below are some helper functions for touch functionality
+    
     private func determineGestureDirection(deltaX: CGFloat, deltaY: CGFloat) -> Direction {
         return abs(deltaX) > abs(deltaY) ? .x : .y
     }
@@ -148,37 +152,37 @@ class MainPadsScene: SKScene {
             let deltaY = location.y - previousLocation.y
             
             // normalise deltas
-            normalizedDeltaX = deltaX / size.width
-            normalizedDeltaY = deltaY / size.height
+            normalisedDeltaX = deltaX / size.width
+            normalisedDeltaY = deltaY / size.height
             
            
-            accumulatedDeltaX += normalizedDeltaX
-            totalDeltaX += normalizedDeltaX
+            accumulatedDeltaX += normalisedDeltaX
+            totalDeltaX += normalisedDeltaX
             
             // Determine direction
-            currentDirection = determineGestureDirection(deltaX: normalizedDeltaX, deltaY: normalizedDeltaY)
+            currentDirection = determineGestureDirection(deltaX: normalisedDeltaX, deltaY: normalisedDeltaY)
             
             // actions based on touches and direction
             switch (activeTouches.count, currentDirection) {
             case (1, .y):
                 showLabels()
-                viewModel.updateVolume(volumeDistance: normalizedDeltaY)
+                viewModel.updateVolume(volumeDistance: normalisedDeltaY)
             case (1, .x):
                 showLabels()
             case (2, .x):
-                viewModel.updateFilterCutoff(cutoffDistance: normalizedDeltaX)
+                viewModel.updateFilterCutoff(cutoffDistance: normalisedDeltaX)
                 showLabels()
             case (2, .y):
-                viewModel.updateComplexity(complexity: normalizedDeltaY)
+                viewModel.updateComplexity(complexity: normalisedDeltaY)
                 showLabels()
             case (3, .y):
-                viewModel.updateReverbAmount(revAmount: normalizedDeltaY)
+                viewModel.updateReverbAmount(revAmount: normalisedDeltaY)
                 showLabels()
             default:
                 break
             }
             
-            // Visualize the touch
+            // Visualise the touch - (circles appear on screen)
             visualiseTouch(at: location)
         }
     }
@@ -377,9 +381,8 @@ class MainPadsScene: SKScene {
     }
     
     
-    //little helper for Note Label
+    //little helper for Note Label since this needs update continously even though frequency isn't selected until touchesEnded() is called
     func updateNoteLabel(steps: CGFloat) {
-        
         
         
         let stepThreshold: CGFloat = 0.05 // Sensitivity threshold for updates

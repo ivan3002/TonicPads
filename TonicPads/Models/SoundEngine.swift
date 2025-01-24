@@ -12,6 +12,7 @@ import DunneAudioKit
 
 class SoundEngine {
     
+    //Note range for the app
     let chromaticScale: [Float] = [
         261.63, // C4
         277.18, // C#4/Db4
@@ -28,6 +29,7 @@ class SoundEngine {
         523.25 //C5
     ]
     
+    //For setting the frequencies of the other oscillators relative to each other
     let twelveTETIntervals: [Float] = [
         1.0, //root
         pow(2.0, 7.0 / 12.0),  // Perfect 5th
@@ -35,7 +37,6 @@ class SoundEngine {
         pow(2.0, 2.0 / 12.0),  // Major 2nd
         pow(2.0, 9.0 / 12.0),  // Major 6th
         pow(2.0, -12.0 / 12.0) // Sub-Octave
-        
         
     ]
     
@@ -71,7 +72,7 @@ class SoundEngine {
     
         oscillators = []
         
-        // Initialize 6 oscillators
+        // Initialise 6 oscillators
         for _ in 0..<6 {
             let osc = MorphingOscillator()
             
@@ -87,6 +88,7 @@ class SoundEngine {
         }
         
         
+        //Initalised so that only root note is heard when the engine first starts
         oscillators[0].amplitude = volume
         oscillators[1].amplitude = 0
         oscillators[2].amplitude = 0
@@ -94,20 +96,19 @@ class SoundEngine {
         oscillators[4].amplitude = 0
         oscillators[5].amplitude = 0
         
+        //single node with all oscillators combined into one
         let mixer = Mixer(oscillators)
         
+        
+        //Initialising parameter starting values
         chorus = Chorus(mixer, frequency: 0.2, depth: 0.4, feedback: 0, dryWetMix: chorusAmount)
         lowPass = LowPassButterworthFilter(chorus, cutoffFrequency: 1000)
         flanger = Flanger(lowPass,frequency: 0.2, depth: 0.8, feedback: 0.8, dryWetMix: flangeAmount)
-        
-        
-        
-        
         reverb = CostelloReverb(lowPass, feedback: 0.9, cutoffFrequency: 7000)
         
         
         drySignal = Mixer(flanger) // Unprocessed signal
-        wetSignal = Mixer(reverb) // Processed signal
+        wetSignal = Mixer(reverb) // Processed (with reverb)
         finalMix = Mixer(drySignal, wetSignal) // Combine both signals
         
         envelope = AmplitudeEnvelope(finalMix)
@@ -119,22 +120,22 @@ class SoundEngine {
         engineInstance.output = envelope
         setOscIntervals()
         
+        
+        
         oscillators.forEach{$0.start()}
         do {
             try engineInstance.start()
-            print("Audio engine started.")
+            //print("Audio engine started.")
         } catch {
-            print("Error starting audio engine: \(error.localizedDescription)")
+            //print("Error starting audio engine: \(error.localizedDescription)")
         }
-        
-        
         
     }
     
     
     func setOscIntervals(){
-        // chooses the interval set based on the current tuning system
         let intervals = twelveTETIntervals
+        
         // Update each oscillator's frequency based on the intervals
         for (index, interval) in intervals.enumerated() {
             if index > 0 && index < oscillators.count {
@@ -148,15 +149,18 @@ class SoundEngine {
 
     func startSound() {
         print("start: ", attack)
+        
+        //since values can't be set while envelope gate node is open I am setting the new values whenever the sound starts up.
         envelope.attackDuration = attack
         envelope.releaseDuration = release
-        
         envelope.openGate()
         
     }
     
     func stopSound() {
-        envelope.closeGate() // Trigger the release phase
+        
+        //triggers release of envelope
+        envelope.closeGate()
     }
     
     func engineStop(){
@@ -166,10 +170,11 @@ class SoundEngine {
     }
     
     func setVolume(v: CGFloat) {
+        
         // Clamp the new volume to the range [0.0, 0.5]
         let newVolume = min(max(volume + AUValue(v), 0.0), 0.5)
         
-        // Update the root oscillator's amplitude
+        // update the root oscillator's amplitude
         oscillators[0].amplitude = AUValue(newVolume)
         
         // Define a scale factor for the other oscillators
@@ -178,14 +183,11 @@ class SoundEngine {
         // Update the amplitudes of the other oscillators
         for (index, oscillator) in oscillators.enumerated() {
             if index > 0 {
-                // Only scale if the oscillator's amplitude is greater than 0 and ensure it doesn't exceed the root note
+                
+                // check here to only scale if the oscillator's amplitude is greater than 0 and ensure it doesn't exceed the root note
                 if oscillator.amplitude > 0.0 {
                     let scaledAmplitude = newVolume * scaleFactor
                     oscillator.amplitude = min(scaledAmplitude, newVolume) // Clamp to root note's volume
-                    //print("Oscillator[\(index)] Amplitude: \(oscillator.amplitude)")
-                } else {
-                    // Oscillator amplitude remains 0 if it was initially 0
-                    //print("Oscillator[\(index)] Amplitude remains: 0.0")
                 }
             }
         }
@@ -194,9 +196,9 @@ class SoundEngine {
         volume = newVolume
     }
     
+    //------------------setters----------------//
+    
     func setFrequency(f: AUValue){
-        // Predefined frequencies for the 12 notes in the chromatic scale (starting from A4 = 440 Hz)
-        //oscillators.forEach{$0.frequency = f}
         oscillators[0].frequency = f
         setOscIntervals()
     }
@@ -209,8 +211,8 @@ class SoundEngine {
     func setDryWetMix(dry: AUValue, wet: AUValue) {
         drySignal.volume = dry
         wetSignal.volume = wet
-        dryWetMix = wet // Keep track of wet level for debugging
-        //print("Dry/Wet Mix - Dry: \(dry), Wet: \(wet)")
+        dryWetMix = wet
+        
     }
     
     func setReverb(dryWet:AUValue){
@@ -278,7 +280,7 @@ class SoundEngine {
             }
         }
     
-    
+    //implementation of complexity algorithm
     func complexityAlg(complexityValue: CGFloat) {
         complexity = min(max(complexity + (complexityValue),0.0), 1.0)
         updateModulationEffects(c: complexityValue)

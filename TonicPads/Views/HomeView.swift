@@ -20,6 +20,7 @@ struct HomeView: View {
                     MainView(showMainView: $showMainView)
                     
                 } else {
+                    //hue rotating background for home screen
                     Color(red: 0.2, green: 0.4, blue: 0.5)
                         .edgesIgnoringSafeArea(.all)
                         .hueRotation(.degrees(hueRotationAngle))

@@ -8,12 +8,13 @@
 
 import SwiftUI
 
+//Swift Ui view for the settings page
+//Very simple but since swift UI, plently room for expansion in the future
+
 struct SettingsPage: View {
     @Binding var showSettings: Bool // Binding to control visibility from MainView
     @ObservedObject var viewModel: SoundViewModel
     
-    
-    let selectorOptions = ["Option 1", "Option 2", "Option 3"] // Options for the picker
     
     
     var body: some View {

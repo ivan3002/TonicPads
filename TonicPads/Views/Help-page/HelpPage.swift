@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+//see HelpText.swift for content
+
 struct HelpPage: View {
     let helpText = HelpText()
     var body: some View {

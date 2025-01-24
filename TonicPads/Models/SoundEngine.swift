@@ -48,7 +48,6 @@ class SoundEngine {
     
     
     var oscillators: [MorphingOscillator]
-    var waveforms: Table
     var reverb: CostelloReverb
     var chorus: Chorus
     var chorusAmount: AUValue = 0
@@ -69,22 +68,16 @@ class SoundEngine {
     var complexity = 0.0
     
     init() {
-        
-        
-        waveforms = Table()
-        waveforms.square(harmonicCount: 10, clear: true)
+    
         oscillators = []
         
         // Initialize 6 oscillators
         for _ in 0..<6 {
             let osc = MorphingOscillator()
             
-            //waveformArray: [Table] = [Table(.triangle), Table(.square), Table(.sine), Table(.sawtooth)]
             osc.index = AUValue(3)
             
             osc.frequency = frequency
-            
-            
             
             osc.detuningOffset = AUValue(0)
             osc.detuningMultiplier = AUValue(1)
@@ -100,8 +93,6 @@ class SoundEngine {
         oscillators[3].amplitude = 0
         oscillators[4].amplitude = 0
         oscillators[5].amplitude = 0
-       // print("Initial root frequency: \(frequency) Hz")
-        //print("Oscillator[0] frequency: \(oscillators[0].frequency) Hz")
         
         let mixer = Mixer(oscillators)
         
@@ -126,12 +117,18 @@ class SoundEngine {
         envelope.releaseDuration = AUValue(release)
         
         engineInstance.output = envelope
-        
-    
-        
         setOscIntervals()
         
-        print("SoundEngine setup complete.")
+        oscillators.forEach{$0.start()}
+        do {
+            try engineInstance.start()
+            print("Audio engine started.")
+        } catch {
+            print("Error starting audio engine: \(error.localizedDescription)")
+        }
+        
+        
+        
     }
     
     
@@ -153,25 +150,19 @@ class SoundEngine {
         print("start: ", attack)
         envelope.attackDuration = attack
         envelope.releaseDuration = release
-        oscillators.forEach{$0.start()}
-        do {
-            try engineInstance.start()
-            print("Audio engine started.")
-        } catch {
-            print("Error starting audio engine: \(error.localizedDescription)")
-        }
+        
         envelope.openGate()
         
     }
     
     func stopSound() {
         envelope.closeGate() // Trigger the release phase
-        sleep(4)
+    }
+    
+    func engineStop(){
         self.oscillators.forEach { $0.stop() }
         self.engineInstance.stop()
         print("Audio engine stopped.")
-       
-        
     }
     
     func setVolume(v: CGFloat) {

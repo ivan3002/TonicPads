@@ -24,6 +24,10 @@ class SoundViewModel: ObservableObject {
         soundEngine.stopSound()
     }
     
+    func engineOff(){
+        soundEngine.engineStop()
+    }
+    
     func updateVolume( volumeDistance: CGFloat) {
         soundEngine.setVolume(v: volumeDistance)
     }

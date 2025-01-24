@@ -139,7 +139,6 @@ class MainPadsScene: SKScene {
     }
     
     func handleGestures(touches: Set<UITouch>){
-        guard let touch = touches.first else { return }
         for touch in touches {
             let location = touch.location(in: self)
             let previousLocation = touch.previousLocation(in: self)

@@ -176,10 +176,9 @@
 		73DBEA822D0C8546004C0D23 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				737550492D30ADF9004596B8 /* SpriteKitScene */,
+				73FD94472D43192A0049ABC6 /* Main-View */,
 				73DBEA762D0C7A18004C0D23 /* LaunchScreen.storyboard */,
 				73DBEA7A2D0C7D82004C0D23 /* HomeView.swift */,
-				73DBEA782D0C7D5A004C0D23 /* MainView.swift */,
 				73FD94462D42DDB80049ABC6 /* Help-page */,
 				736A247E2D3B70AB00B78A12 /* SettingsPage.swift */,
 			);
@@ -201,6 +200,15 @@
 				73C391A62D3A01B700C37793 /* HelpText.swift */,
 			);
 			path = "Help-page";
+			sourceTree = "<group>";
+		};
+		73FD94472D43192A0049ABC6 /* Main-View */ = {
+			isa = PBXGroup;
+			children = (
+				73DBEA782D0C7D5A004C0D23 /* MainView.swift */,
+				737550492D30ADF9004596B8 /* SpriteKitScene */,
+			);
+			path = "Main-View";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

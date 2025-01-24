@@ -36,7 +36,8 @@ struct MainView: View {
                     HStack{
                         //--------------------------------
                         Button(action: {
-                            showMainView = false 
+                            showMainView = false
+                            viewModel.engineOff()
                             print("hi3")
                         }){
                             Image("icons8-back-48" )

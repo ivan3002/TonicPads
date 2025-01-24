@@ -364,7 +364,7 @@ class MainPadsScene: SKScene {
          }
          
          if filterCutoffLabel == nil{
-             filterCutoffLabel = SKLabelNode(text: "Filter Cutoff: ")
+             filterCutoffLabel = SKLabelNode(text: "Filter Cutoff(Hz): ")
              filterCutoffLabel.fontName = "Raleway Extra Bold"
              filterCutoffLabel.fontSize = 26
              filterCutoffLabel.fontColor = .white

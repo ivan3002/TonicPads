@@ -2,11 +2,11 @@
 TonicPads Live is an innovative iOS application built for live performers. It bridges the gap between complex sound design and real-time performance, allowing musicians to craft and manipulate lush pad soundscapes through an intuitive, gesture-based interface.
 
 ## Key Features
-Gesture-Based Control: Use multi-finger touch gestures to shape sounds in real-time. 
-Performance Mode: A minimalist, distraction-free interface designed for the heat of a live show. 
-Dynamic Visuals: Built with SpriteKit, the UI features a particle emitter system that provides visual feedback for your sound manipulations. 
-Customizable Audio: Adjust attack and release times via a dedicated settings page to fit your playing style. 
-Help Guide: An integrated, easily accessible guide helps users master gestures quickly.
+- Gesture-Based Control: Use multi-finger touch gestures to shape sounds in real-time. 
+- Performance Mode: A minimalist, distraction-free interface designed for the heat of a live show. 
+- Dynamic Visuals: Built with SpriteKit, the UI features a particle emitter system that provides visual feedback for your sound manipulations. 
+- Customizable Audio: Adjust attack and release times via a dedicated settings page to fit your playing style. 
+- Help Guide: An integrated, easily accessible guide helps users master gestures quickly.
 
 ###  Gesture Controls
 |Finger Count|Direction|Function|

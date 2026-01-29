@@ -10,8 +10,9 @@ Help Guide: An integrated, easily accessible guide helps users master gestures q
 
 ###  Gesture Controls
 |Finger Count|Direction|Function|
-|1 Finger|Vertical|Adjust Volume| 
-|1 Finger|Horizontal|Select Root Note (Release to Play)| 
-|2 Fingers|Vertical|Control Harmonic Complexity|
-|2 Fingers|Horizontal|Adjust Low Pass Filter Cutoff| 
-|3 Fingers|Vertical|Adjust Reverb Amount/Mix|
+|----------|---------|------------|
+| 1 Finger | Vertical | Adjust Volume | 
+| 1 Finger | Horizontal | Select Root Note (Release to Play) | 
+| 2 Fingers | Vertical | Control Harmonic Complexity |
+| 2 Fingers | Horizontal | Adjust Low Pass Filter Cutoff | 
+| 3 Fingers | Vertical | Adjust Reverb Amount/Mix |
